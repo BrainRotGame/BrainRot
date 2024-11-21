@@ -14,8 +14,6 @@ class Category {
   // Getter method for list of category
   List<Word> get category => List.from(_category);
 
-  //Getter method for category name
-
   // add or update category
   void upsertCategory(Word word) {
     if (isWordExists(word.wordName.toLowerCase())) {

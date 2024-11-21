@@ -20,7 +20,7 @@ class Collection {
 
     if (existingIndex != -1) {
       // notify user the word already exist
-      //print('Category "${category.categoryName}" already exists.');
+      // print('Category "${category.categoryName}" already exists.');
     } else {
       // Add new category
       _collection.add(category);
