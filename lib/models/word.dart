@@ -3,12 +3,13 @@
 // hint(optional)
 
 class Word {
-  final String word;
+  final String wordName;
   final String description;
   final String? hint;
 
+  // constructor
   Word({
-    required this.word,
+    required this.wordName,
     required this.description,
     this.hint,
   });
