@@ -1,49 +1,24 @@
-import 'package:brainrot/providers/drawing_provider.dart';
-import 'package:brainrot/views/game_views/draw_area.dart';
-import 'package:brainrot/views/game_views/palette.dart';
+import 'dart:async';
+
+import 'package:brainrot/views/game_views/draw_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class DrawView extends StatelessWidget {
-  const DrawView({super.key, required this.width, required this.height});
+class GameView extends StatelessWidget {
 
-  final double width;
-  final double height;
+  const GameView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar:
-            AppBar(title: const Text('Drawing App'), actions: <Widget>[
-              Semantics(label: 'Clear all button',excludeSemantics: true, child: IconButton(key: const Key('Clear'), iconSize: 48, onPressed: () => _clear(context), icon: const Icon(Icons.clear))),
-              Semantics(label: 'Undo button',excludeSemantics: true, child: IconButton(key: const Key('Undo'), iconSize: 48, onPressed: () => _undo(context), icon: const Icon(Icons.undo))),
-              Semantics(label: 'Redo button',excludeSemantics: true, child: IconButton(key: const Key('Redo'), iconSize: 48, onPressed: () => _redo(context), icon: const Icon(Icons.redo))),
-        ]),
-        drawer: Drawer(
-          child: Palette(context, key: const Key('Palette')),
-        ),
-        body: Center(
-          child: Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            child: DrawArea(width: width, height: height),
-          ),
-        ),
-      ),
+    return Column(
+      children: [
+        ElevatedButton(onPressed: () => _navigateToDrawing(context), 
+          child: const Text("Navigate to drawing"))
+      ],
+      
     );
   }
   
-  void _clear(BuildContext context) {
-    Provider.of<DrawingProvider>(context, listen: false).clear();
+  _navigateToDrawing(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const DrawView(width: 400, height: 400)));
   }
-  
-  void _undo(BuildContext context) {
-    Provider.of<DrawingProvider>(context, listen: false).undo();
-  }
-
-  void _redo(BuildContext context) {
-    Provider.of<DrawingProvider>(context, listen: false).redo();
-  }
-
-  
 }
