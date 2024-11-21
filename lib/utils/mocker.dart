@@ -75,5 +75,6 @@ Collection gameMocker() {
   gameCollection.upsertCategory(fruitsCategory);
   gameCollection.upsertCategory(countriesCategory);
 
+  return gameCollection;
 }
 
