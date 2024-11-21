@@ -1,3 +1,4 @@
+import 'package:brainrot/models/word.dart';
 import 'package:flutter/material.dart';
 
 //GameStateProvider will keep track of the game state when a game's being played
@@ -7,19 +8,19 @@ class GameStateProvider extends ChangeNotifier{
   int time;
   int correct;
   int skipped;
-  // List<Word> words;
+  List<Word> words;
 
-  GameStateProvider({required this.time}) : correct = 0, skipped = 0;
+  GameStateProvider({required this.time, required this.words}) : correct = 0, skipped = 0;
 
   void incrementCorrect() {
     correct++;
-    // words.removeLast();
+    words.removeLast();
     notifyListeners();
   }
 
   void incrementSkip() {
     skipped++;
-    // words.removeLast();
+    words.removeLast();
     notifyListeners();
   }
 
