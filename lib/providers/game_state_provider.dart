@@ -18,20 +18,14 @@ class GameStateProvider extends ChangeNotifier{
   void incrementCorrect() {
     correct++;
     guessedWords.add(words[0]);
-    words.removeAt(0);
-    if(words.isEmpty) {
-      finished = true;
-    }
+    newTerm();
     notifyListeners();
   }
 
   //Method will increment the skip counter
   void incrementSkip() {
     skipped++;
-    words.removeAt(0);
-    if(words.isEmpty) {
-      finished = true;
-    }
+    newTerm();
     notifyListeners();
   }
 
@@ -40,6 +34,14 @@ class GameStateProvider extends ChangeNotifier{
     correct = 0;
     skipped = 0;
     finished = false;
+    notifyListeners();
+  }
+
+  void newTerm() {
+    words.removeAt(0);
+    if(words.isEmpty) {
+      finished = true;
+    }
     notifyListeners();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:brainrot/providers/game_state_provider.dart';
 import 'package:brainrot/utils/mocker.dart';
-import 'package:brainrot/views/all_categories_view.dart';
+// import 'package:brainrot/views/all_categories_view.dart';
 import 'package:brainrot/views/game_views/game_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
