@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:io';
+
 class GameView extends StatefulWidget {
 
   const GameView({super.key});
@@ -40,6 +41,7 @@ class _GameViewState extends State<GameView> {
   Widget build(BuildContext context) {
     return Consumer<GameStateProvider>(
       builder: (context, gameStateProvider, child) {
+        if(!gameStateProvider.finished) {
           return Scaffold(
             backgroundColor: Colors.lightBlue[100],
           body: Padding(
@@ -82,8 +84,17 @@ class _GameViewState extends State<GameView> {
                   child: const Text("Skip")),
               ],
             ),
-          ),
-        );
+          )
+          );
+        }
+        else {
+           return const Scaffold(
+            body: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text('FINISHED')
+            ),
+          );
+        }
       }
 
     );
@@ -92,11 +103,12 @@ class _GameViewState extends State<GameView> {
   _navigateToDrawing(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 1));
     if (context.mounted) {
+      final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const DrawView(
-            width: 800, height: 400)));
+          builder: (context) => DrawView(
+            width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }
 }

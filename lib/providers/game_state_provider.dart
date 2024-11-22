@@ -9,24 +9,39 @@ class GameStateProvider extends ChangeNotifier{
   int correct;
   int skipped;
   List<Word> words;
+  List<Word> guessedWords;
+  bool finished;
 
-  GameStateProvider({required this.time, required this.words}) : correct = 0, skipped = 0;
+  GameStateProvider({required this.time, required this.words}) : correct = 0, skipped = 0, guessedWords = [], finished = false;
 
+  //Method will increment the correct counter and add the current word to the list of correctly guessed words
   void incrementCorrect() {
     correct++;
-    words.removeLast();
+    guessedWords.add(words[0]);
+    newTerm();
     notifyListeners();
   }
 
+  //Method will increment the skip counter
   void incrementSkip() {
     skipped++;
-    words.removeLast();
+    newTerm();
     notifyListeners();
   }
 
+  //Method will refresh the game state, setting all counters to 0 and setting the game state to being played
   void refreshGameState() {
     correct = 0;
     skipped = 0;
+    finished = false;
+    notifyListeners();
+  }
+
+  void newTerm() {
+    words.removeAt(0);
+    if(words.isEmpty) {
+      finished = true;
+    }
     notifyListeners();
   }
 }
