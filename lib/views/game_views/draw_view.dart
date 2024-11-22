@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DrawView extends StatelessWidget {
-  const DrawView({super.key, required this.width, required this.height, required this.guessed, required this.skipped});
+  const DrawView({super.key, required this.width, required this.height, required this.correct, required this.skipped});
 
-  final int guessed;
+  final int correct;
   final int skipped;
   final double width;
   final double height;
@@ -40,7 +40,7 @@ class DrawView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: const Color.fromARGB(255, 197, 235, 253),
                   ),
-                  child: Column(children: [Text('Correct Guesses: $guessed'),Text('Skipped: $skipped'),],)),
+                  child: Column(children: [Text('Correct Guesses: $correct'),Text('Skipped: $skipped'),],)),
               ),
               Container(
                 decoration: BoxDecoration(border: Border.all(color: Colors.black)),

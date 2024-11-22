@@ -11,7 +11,7 @@ class GameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<GameStateProvider>(
       builder: (context, gameStateProvider, child) {
-          return Scaffold(
+        return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -41,10 +41,9 @@ class GameView extends StatelessWidget {
                       const Text("TEXT", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
                       const Expanded(child: SizedBox()),
                       // const SizedBox(width: 300),
-                      ElevatedButton(onPressed: () => _navigateToDrawing(context), 
+                      ElevatedButton(onPressed: () => _navigateToDrawing(context, gameStateProvider.correct, gameStateProvider.skipped), 
                       child: const Text("Navigate to drawing")),
                     ]
-                    
                   ),
                 ),
                 
@@ -59,7 +58,7 @@ class GameView extends StatelessWidget {
     );
   }
   
-  _navigateToDrawing(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const DrawView(width: 800, height: 400)));
+  _navigateToDrawing(BuildContext context, int correct, int skipped) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DrawView(correct: correct, skipped: skipped, width: 800, height: 400)));
   }
 }
