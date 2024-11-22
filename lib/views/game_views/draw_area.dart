@@ -57,6 +57,12 @@ class DrawArea extends StatelessWidget {
           drawingProvider.colorSelected,
         );
         break;
+      case Tools.filledOval:
+        drawingProvider.pendingAction = OvalFilledAction(
+          details.localPosition,
+          details.localPosition,
+          drawingProvider.colorSelected,
+        );
       case Tools.stroke:
         drawingProvider.pendingAction = StrokeAction(
           [details.localPosition],
@@ -88,6 +94,14 @@ class DrawArea extends StatelessWidget {
       case Tools.oval:
         final pendingAction = drawingProvider.pendingAction as OvalAction;
         drawingProvider.pendingAction = OvalAction(
+          pendingAction.point1,
+          details.localPosition,
+          pendingAction.color,
+        );
+        break;
+      case Tools.filledOval:
+        final pendingAction = drawingProvider.pendingAction as OvalFilledAction;
+        drawingProvider.pendingAction = OvalFilledAction(
           pendingAction.point1,
           details.localPosition,
           pendingAction.color,

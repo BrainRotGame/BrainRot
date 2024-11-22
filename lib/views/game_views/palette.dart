@@ -35,6 +35,12 @@ class Palette extends StatelessWidget {
             tool: Tools.oval,
             provider: drawingProvider,
           ),
+          _buildToolButton(
+            name: 'Filled Oval',
+            icon: Icons.circle,
+            tool: Tools.filledOval,
+            provider: drawingProvider,
+          ),
 
           // Add missing tools here
           const Divider(),
@@ -49,7 +55,7 @@ class Palette extends StatelessWidget {
           _buildColorButton('Grey', Colors.grey, drawingProvider),
           _buildColorButton('White', Colors.white, drawingProvider),
           _buildColorButton('Brown', Colors.brown, drawingProvider),
-          
+
         ],
       ),
     );
@@ -85,8 +91,8 @@ class Palette extends StatelessWidget {
             height: 48,
             child: Icon(icon, color: provider.toolSelected == tool ? Colors.blue : Colors.grey, size: 48,)),
         )
-        
-      
+
+
       ),
     );
   }
@@ -119,5 +125,5 @@ class Palette extends StatelessWidget {
       ),
     );
   }
-  
+
 }

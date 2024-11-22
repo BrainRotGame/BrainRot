@@ -2,7 +2,7 @@ import 'package:brainrot/models/draw_actions/draw_actions.dart';
 import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:brainrot/models/drawing.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 //Object represents a DrawingPainter for a drawing app
 //Object will paint a particular thing on a Canvas/area
@@ -53,16 +53,22 @@ class DrawingPainter extends CustomPainter {
           ..style = PaintingStyle.stroke;
           canvas.drawOval(Rect.fromPoints(ovalAction.point1, ovalAction.point2), paint);
           break;
+        case final OvalFilledAction ovalFilledAction:
+        final paintOval = Paint()..color = ovalFilledAction.color
+        ..strokeWidth = 2;
+        canvas.drawOval(Rect.fromPoints(
+          ovalFilledAction.point1, ovalFilledAction.point2), paintOval);
+          break;
         case final StrokeAction strokeAction:
           final paint = Paint()..color = strokeAction.color
           ..strokeWidth = 2;
-          
+
           for(int i = 0; i < strokeAction.points.length-1; i++) {
             canvas.drawLine(strokeAction.points[i], strokeAction.points[i+1], paint);
           }
           break;
         default:
-          throw UnimplementedError('Action not implemented: $action'); 
+          throw UnimplementedError('Action not implemented: $action');
       }
   }
 
