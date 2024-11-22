@@ -14,13 +14,13 @@ class GameStateProvider extends ChangeNotifier{
 
   void incrementCorrect() {
     correct++;
-    words.removeLast();
+    // words.removeLast();
     notifyListeners();
   }
 
   void incrementSkip() {
     skipped++;
-    words.removeLast();
+    // words.removeLast();
     notifyListeners();
   }
 
