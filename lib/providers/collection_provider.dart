@@ -2,7 +2,7 @@ import 'package:brainrot/utils/mocker.dart';
 import 'package:flutter/material.dart';
 import 'package:brainrot/models/category.dart';
 
-class CollectionProvider with ChangeNotifier {
+class CollectionProvider extends ChangeNotifier {
   final List<Category> _categories = gameMocker().collection;
 
   List<Category> get categories => _categories;
