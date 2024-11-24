@@ -70,7 +70,7 @@ class _GameViewState extends State<GameView> {
                       ),
                       // const SizedBox(width: 300),
                       const Expanded(child: SizedBox()),
-                      const Text("TEXT", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+                      Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
                       const Expanded(child: SizedBox()),
                       // const SizedBox(width: 300),
                       ElevatedButton(onPressed: () => _navigateToDrawing(context),
@@ -92,6 +92,7 @@ class _GameViewState extends State<GameView> {
             body: Padding(
               padding: EdgeInsets.all(20.0),
               child: Text('FINISHED')
+              //UI needs to display the number of correct guesses, the number of skips, and the number of words that were parsed
             ),
           );
         }
