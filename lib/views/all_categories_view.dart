@@ -1,7 +1,7 @@
 import 'package:brainrot/providers/collection_provider.dart';
+import 'package:brainrot/views/word_bank_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class AllCategoriesView extends StatelessWidget {
   const AllCategoriesView({super.key});
@@ -98,6 +98,13 @@ class AllCategoriesView extends StatelessWidget {
           final category = categories[index];
           return GestureDetector(
             onTap: () => _showCategoryPopup(context, category.categoryName),
+            onLongPress: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => WordBankView(category: category),
+                ),
+              );
+            },
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -106,7 +113,7 @@ class AllCategoriesView extends StatelessWidget {
               ),
               child: Text(
                 category.categoryName,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 32),
               ),
             ),
           );
