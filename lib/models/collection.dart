@@ -35,4 +35,9 @@ class Collection {
           category.categoryName.toLowerCase() == categoryName.toLowerCase(),
     );
   }
+
+  // method that allows for access to all categories in the collection data
+  List<Category> allCategories() {
+    return List.from(_collection);
+  }
 }

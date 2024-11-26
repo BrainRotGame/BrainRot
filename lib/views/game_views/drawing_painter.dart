@@ -2,7 +2,6 @@ import 'package:brainrot/models/draw_actions/draw_actions.dart';
 import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:brainrot/models/drawing.dart';
-import 'package:flutter/material.dart';
 
 //Object represents a DrawingPainter for a drawing app
 //Object will paint a particular thing on a Canvas/area

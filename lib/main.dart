@@ -8,11 +8,12 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    
+
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => DrawingProvider(width: 800, height: 400)),
-        ChangeNotifierProvider(create: (context) => GameStateProvider(time: 0, words: gameMocker().collection[0].category))
+        ChangeNotifierProvider(create: (context) => GameStateProvider(time: 0, words: gameMocker().collection[0].category,
+        collectionView: gameMocker()))
       ],
       child: const MyApp())
   );
