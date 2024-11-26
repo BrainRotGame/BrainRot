@@ -21,6 +21,14 @@ class _GameViewState extends State<GameView> {
     _sensorView();
   }
 
+@override
+// ensuring context and widget tree are available
+// in which they can be accessed
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  // called once we know that the context has been initialized
+  _sensorView();  // Start listening after context is available
+}
   void _sensorView() {
       if (Platform.isAndroid || Platform.isIOS) {
     accelerometerEvents.listen((AccelerometerEvent e) {
@@ -38,18 +46,28 @@ class _GameViewState extends State<GameView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<GameStateProvider>(
-      builder: (context, gameStateProvider, child) {
-        if(!gameStateProvider.finished) {
-          return Scaffold(
-            backgroundColor: Colors.lightBlue[100],
+ Widget build(BuildContext context) {
+  return Consumer<GameStateProvider>(
+    builder: (context, gameStateProvider, child) {
+      // Call the game finished dialog if the game is complete
+      if (gameStateProvider.finished) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _gameFinished(context, gameStateProvider);
+        });
+      }
+
+      // Render UI based on whether the game is finished
+      if (!gameStateProvider.finished) {
+        return Scaffold(
+          backgroundColor: Colors.lightBlue[100],
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                ElevatedButton(onPressed: () => gameStateProvider.incrementCorrect(),
-                  child: const Text("Guessed Correct")),
+                ElevatedButton(
+                  onPressed: () => gameStateProvider.incrementCorrect(),
+                  child: const Text("Guessed Correct"),
+                ),
                 Expanded(
                   flex: 1,
                   child: Row(
@@ -63,41 +81,83 @@ class _GameViewState extends State<GameView> {
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.white,
                         ),
-                        child: Column(children: [
-                          Text('Correct Guesses: ${gameStateProvider.correct}'),
-                          Text('Skipped: ${gameStateProvider.skipped}'),
-                        ],),
+                        child: Column(
+                          children: [
+                            Text('Correct Guesses: ${gameStateProvider.correct}'),
+                            Text('Skipped: ${gameStateProvider.skipped}'),
+                          ],
+                        ),
                       ),
-                      // const SizedBox(width: 300),
                       const Expanded(child: SizedBox()),
-                      const Text("TEXT", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+                      const Text(
+                        "TEXT",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+                      ),
                       const Expanded(child: SizedBox()),
-                      // const SizedBox(width: 300),
-                      ElevatedButton(onPressed: () => _navigateToDrawing(context),
-                      child: const Text("Navigate to drawing")),
-                    ]
-
+                      ElevatedButton(
+                        onPressed: () => _navigateToDrawing(context),
+                        child: const Text("Navigate to drawing"),
+                      ),
+                    ],
                   ),
                 ),
-
-                  ElevatedButton(onPressed: () => gameStateProvider.incrementSkip(),
-                  child: const Text("Skip")),
+                ElevatedButton(
+                  onPressed: () => gameStateProvider.incrementSkip(),
+                  child: const Text("Skip"),
+                ),
               ],
             ),
-          )
-          );
-        }
-        else {
-           return const Scaffold(
-            body: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text('FINISHED')
-            ),
-          );
-        }
+          ),
+        );
+      } else {
+        return const Scaffold(
+          body: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text('FINISHED'),
+          ),
+        );
       }
+    },
+  );
+}
 
-    );
+  // method created to display a dialog box in order
+  // for the user to see the summary of the game they played
+  _gameFinished(BuildContext context, GameStateProvider gameStateProvider) {
+    if (gameStateProvider.finished) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Summary of Game'),
+            content: Text(
+              'Game is Complete!\n\n'
+              'Words Guessed Correctly: ${gameStateProvider.correct}\n'
+              'Words Skipped: ${gameStateProvider.skipped}',
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  gameStateProvider.refreshGameState(null);
+                },
+                child: const Text('Restart Game', textAlign: TextAlign.center,),
+              ),
+              TextButton(
+                onPressed: () {
+                  // close the dialog box
+                  Navigator.of(context).pop();
+                  // forcefully exit the app entirely
+                  exit(0);
+                },
+                child: const Text("Exit"),
+              ),
+            ],
+          );
+        }
+      );
+    }
   }
 
   _navigateToDrawing(BuildContext context) async {

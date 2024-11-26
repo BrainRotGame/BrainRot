@@ -1,4 +1,5 @@
 import 'package:brainrot/providers/drawing_provider.dart';
+import 'package:brainrot/providers/game_state_provider.dart';
 import 'package:brainrot/views/game_views/draw_area.dart';
 import 'package:brainrot/views/game_views/palette.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,10 @@ class DrawView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gameStateProvider = Provider.of<GameStateProvider>(context);
+    if (gameStateProvider.clearDrawing) {
+      _clear(context);
+    }
     return MaterialApp(
       home: Scaffold(
         appBar:
@@ -50,9 +55,9 @@ class DrawView extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: Semantics(
                   label: 'Back button',
-                  excludeSemantics: true, 
+                  excludeSemantics: true,
                   child: ElevatedButton(
-                    onPressed: () => _popBack(context), 
+                    onPressed: () => _popBack(context),
                     style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 192, 235, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
                     child: const Icon(Icons.arrow_back, size: 30,)))
                   // child: IconButton(key: const Key('Back'), iconSize: 30, onPressed: () => _popBack(context), icon: const Icon(Icons.arrow_back)))
@@ -63,11 +68,11 @@ class DrawView extends StatelessWidget {
       ),
     );
   }
-  
+
   void _clear(BuildContext context) {
     Provider.of<DrawingProvider>(context, listen: false).clear();
   }
-  
+
   void _undo(BuildContext context) {
     Provider.of<DrawingProvider>(context, listen: false).undo();
   }
@@ -75,10 +80,10 @@ class DrawView extends StatelessWidget {
   void _redo(BuildContext context) {
     Provider.of<DrawingProvider>(context, listen: false).redo();
   }
-  
+
   _popBack(BuildContext context) {
     Navigator.pop(context);
   }
 
-  
+
 }
