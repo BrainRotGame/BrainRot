@@ -52,7 +52,7 @@ class AllCategoriesView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // Timer selection logic can be implemented here
+                // implement here to jump to game view
                 Navigator.of(context).pop();
               },
               child: const Text('1 min'),
@@ -113,7 +113,7 @@ class AllCategoriesView extends StatelessWidget {
               ),
               child: Text(
                 category.categoryName,
-                style: const TextStyle(color: Colors.white, fontSize: 32),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
           );
