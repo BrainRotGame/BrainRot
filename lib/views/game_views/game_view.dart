@@ -89,10 +89,7 @@ void didChangeDependencies() {
                         ),
                       ),
                       const Expanded(child: SizedBox()),
-                      const Text(
-                        "TEXT",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
-                      ),
+                      Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
                       const Expanded(child: SizedBox()),
                       ElevatedButton(
                         onPressed: () => _navigateToDrawing(context),
