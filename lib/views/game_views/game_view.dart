@@ -1,5 +1,7 @@
 // import 'dart:math';
 
+import 'dart:async';
+
 import 'package:brainrot/providers/game_state_provider.dart';
 // import 'package:brainrot/utils/mocker.dart';
 // import 'package:brainrot/views/all_categories_view.dart';
@@ -18,11 +20,23 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
+  late final Timer _gameTimer;
 
   @override
   void initState() {
     super.initState();
     _sensorView();
+
+    final singleUseGameProvider = Provider.of<GameStateProvider>(context, listen: false);
+    _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
+      singleUseGameProvider.decrementTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    _gameTimer.cancel();
+    super.dispose();
   }
 
 @override
@@ -79,7 +93,7 @@ void didChangeDependencies() {
                     children: [
                       Container(
                         width: 200,
-                        height: 50,
+                        height: 65,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(5),
@@ -87,6 +101,7 @@ void didChangeDependencies() {
                         ),
                         child: Column(
                           children: [
+                            Text('Time Remaining: ${gameStateProvider.time}'),
                             Text('Correct Guesses: ${gameStateProvider.correct}'),
                             Text('Skipped: ${gameStateProvider.skipped}'),
                           ],
@@ -168,8 +183,8 @@ void didChangeDependencies() {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DrawView(
-            width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
+          builder: (context) => DrawView(width: 800, height: 400, provider: gameStateProvider,)));
+          // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }
 }

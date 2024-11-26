@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DrawView extends StatelessWidget {
-  const DrawView({super.key, required this.width, required this.height, required this.correct, required this.skipped});
+  // const DrawView({super.key, required this.width, required this.height, required this.correct, required this.skipped});
 
-  final int correct;
-  final int skipped;
+  // final int correct;
+  // final int skipped;
   final double width;
   final double height;
+
+  const DrawView({super.key, required this.width, required this.height, required this.provider});
+  final GameStateProvider provider;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class DrawView extends StatelessWidget {
     if (gameStateProvider.clearDrawing) {
       _clear(context);
     }
+    final gameProvider = Provider.of<GameStateProvider>(context, listen: false);
     return MaterialApp(
       home: Scaffold(
         appBar:
@@ -39,13 +43,19 @@ class DrawView extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Container(
                   width: 200,
-                  height: 50,
+                  height: 65,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(5),
                     color: const Color.fromARGB(255, 197, 235, 253),
                   ),
-                  child: Column(children: [Text('Correct Guesses: $correct'),Text('Skipped: $skipped'),],)),
+                  child: Column(children: [
+                    Text('Time Remaining: ${gameProvider.time}'),
+                    Text('Correct Guesses: ${gameProvider.correct}'),
+                    Text('Skipped: ${gameProvider.skipped}'),],)),
+                    // Text('Correct Guesses: ${gameProvider.time}'),
+                    // Text('Correct Guesses: $correct'),
+                    // Text('Skipped: $skipped'),],)),
               ),
               Container(
                 decoration: BoxDecoration(border: Border.all(color: Colors.black)),

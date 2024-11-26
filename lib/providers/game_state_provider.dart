@@ -81,4 +81,12 @@ class GameStateProvider extends ChangeNotifier{
     notifyListeners();
     clearDrawing = false;
   }
+
+  void decrementTimer() {
+    time--;
+    if(time == 0) {
+      finished = true;
+    }
+    notifyListeners();
+  }
 }
