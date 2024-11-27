@@ -1,3 +1,4 @@
+import 'package:brainrot/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:brainrot/providers/word_bank_provider.dart';
@@ -5,9 +6,9 @@ import 'package:brainrot/views/all_categories_view.dart'; // Ensure this is the 
 import 'package:brainrot/views/create_word_view.dart';
 
 class WordBankView extends StatelessWidget {
-  final String categoryName;
+  final Category category;
 
-  const WordBankView({super.key, required this.categoryName});
+  const WordBankView({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class WordBankView extends StatelessWidget {
             );
           },
         ),
-        title: Text('$categoryName - Word Bank'),
+        title: Text('${category.categoryName} - Word Bank'),
         actions: [
           IconButton(
             onPressed: () {

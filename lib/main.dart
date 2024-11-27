@@ -1,3 +1,4 @@
+import 'package:brainrot/providers/word_bank_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:brainrot/views/all_categories_view.dart';
@@ -8,6 +9,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CollectionProvider()),
+        ChangeNotifierProvider(create: (_) => WordBankProvider()),
       ],
       child: const MyApp(),
     ),
