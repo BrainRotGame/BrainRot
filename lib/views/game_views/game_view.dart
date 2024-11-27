@@ -164,6 +164,7 @@ void didChangeDependencies() {
                 onPressed: () {
                   Navigator.of(context).pop();
                   gameStateProvider.refreshGameState(null);
+                  _restartTimer();
                 },
                 child: const Text('Restart Game', textAlign: TextAlign.center,),
               ),
@@ -193,5 +194,18 @@ void didChangeDependencies() {
           builder: (context) => DrawView(width: 800, height: 400, provider: gameStateProvider,)));
           // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
+  }
+  
+  void _restartTimer() {
+    final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);
+    gameStateProvider.setTime(widget.time);
+    
+    _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
+      gameStateProvider.decrementTimer();
+      
+      if (gameStateProvider.time <= 0) {
+        _gameTimer.cancel(); // Stop the timer if the time runs out
+      }
+    });
   }
 }
