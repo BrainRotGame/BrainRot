@@ -1,5 +1,3 @@
-
-
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/word.dart';
