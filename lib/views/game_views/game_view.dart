@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:brainrot/models/category.dart';
 import 'package:brainrot/providers/game_state_provider.dart';
 // import 'package:brainrot/utils/mocker.dart';
 // import 'package:brainrot/views/all_categories_view.dart';
@@ -12,8 +13,10 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:io';
 
 class GameView extends StatefulWidget {
+  final Category category;
+  final int time;
 
-  const GameView({super.key});
+  const GameView({super.key, required this.time, required this.category});
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -21,6 +24,7 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> {
   late final Timer _gameTimer;
+  
 
   @override
   void initState() {
@@ -28,6 +32,8 @@ class _GameViewState extends State<GameView> {
     _sensorView();
 
     final singleUseGameProvider = Provider.of<GameStateProvider>(context, listen: false);
+    singleUseGameProvider.changeCategory(widget.category.category);
+    singleUseGameProvider.setTime(widget.time);
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
       singleUseGameProvider.decrementTimer();
     });
@@ -69,6 +75,7 @@ void didChangeDependencies() {
     builder: (context, gameStateProvider, child) {
       // Call the game finished dialog if the game is complete
       if (gameStateProvider.finished) {
+        _gameTimer.cancel();
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _gameFinished(context, gameStateProvider);
         });
@@ -176,8 +183,8 @@ void didChangeDependencies() {
     }
   }
 
-  _navigateToDrawing(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 1));
+  _navigateToDrawing(BuildContext context) {
+    // await Future.delayed(const Duration(seconds: 1));
     if (context.mounted) {
       final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(

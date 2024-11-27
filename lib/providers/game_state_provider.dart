@@ -11,19 +11,25 @@ class GameStateProvider extends ChangeNotifier{
   int time;
   int correct;
   int skipped;
-  List<Word> words = [];
+  List<Word> words;
   List<Word> guessedWords;
   bool finished;
   bool clearDrawing;
 
-  GameStateProvider({required this.time, required this.words, required Collection collectionView})
+  GameStateProvider({required Collection collectionView})
   : _collectionView = collectionView,
+  time = 0,
   correct = 0,
   skipped = 0,
+  words = [],
   guessedWords = [],
   finished = false,
   clearDrawing = false;
   // _firstListWords = List.from(words);
+
+  void setTime(int newTime) {
+    time = newTime;
+  }
 
   //Method will increment the correct counter and add the current word to the list of correctly guessed words
   void incrementCorrect() {
@@ -67,6 +73,7 @@ class GameStateProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  //Method will switch to a new term
   void newTerm() {
     if (words.isNotEmpty) {
       words.removeAt(0);
@@ -82,11 +89,18 @@ class GameStateProvider extends ChangeNotifier{
     clearDrawing = false;
   }
 
+  //Method will decrement timer
+  //If the timer is decremented down to 0, it'll complete the game
   void decrementTimer() {
     time--;
     if(time == 0) {
       finished = true;
     }
     notifyListeners();
+  }
+
+  void changeCategory(List<Word> category) {
+    category.shuffle();
+    words = category;
   }
 }

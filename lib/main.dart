@@ -12,7 +12,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => DrawingProvider(width: 800, height: 400)),
-        ChangeNotifierProvider(create: (context) => GameStateProvider(time: 60, words: gameMocker().collection[0].category,
+        ChangeNotifierProvider(create: (context) => GameStateProvider(
         collectionView: gameMocker()))
       ],
       child: const MyApp())
@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Brain Rot App',
-      home: GameView()
+      home: GameView(time: 6000, category: gameMocker().collection[0])
     );
   }
 }
