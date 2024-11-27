@@ -1,8 +1,7 @@
-import 'package:brainrot/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:brainrot/models/category.dart';
 import 'package:brainrot/providers/word_bank_provider.dart';
-import 'package:brainrot/views/all_categories_view.dart'; // Ensure this is the correct import
 import 'package:brainrot/views/create_word_view.dart';
 
 class WordBankView extends StatelessWidget {
@@ -14,25 +13,15 @@ class WordBankView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          tooltip: 'Back to Categories',
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AllCategoriesView(), // Navigate to actual AllCategoriesView
-              ),
-            );
-          },
-        ),
         title: Text('${category.categoryName} - Word Bank'),
         actions: [
           IconButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CreateWordView()),
+                MaterialPageRoute(
+                  builder: (context) => const CreateWordView(),
+                ),
               );
             },
             icon: const Icon(
@@ -43,12 +32,13 @@ class WordBankView extends StatelessWidget {
           ),
         ],
       ),
-      // Set the background color here
-      backgroundColor: Colors.white, // Example: Light blue-grey background
+      backgroundColor: Colors.white,
       body: Consumer<WordBankProvider>(
-        builder: (context, wordBankProvider, child) {
-          final words = wordBankProvider.words;
-
+        builder: (context, wordBankProvider, _) {
+          final allWords = [
+            ...category.category,
+            ...wordBankProvider.words,
+          ];
           return Column(
             children: [
               Expanded(
@@ -60,10 +50,9 @@ class WordBankView extends StatelessWidget {
                     mainAxisSpacing: 20, // Space between rows
                     childAspectRatio: 2.5, // Adjust the box shape
                   ),
-                  itemCount: words.length,
+                  itemCount: allWords.length,
                   itemBuilder: (context, index) {
-                    final word = words[index];
-
+                    final word = allWords[index];
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -90,7 +79,6 @@ class WordBankView extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 30,
-                              // fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
