@@ -1,5 +1,7 @@
-import 'package:brainrot/views/all_categories_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:brainrot/providers/word_bank_provider.dart';
+import 'package:brainrot/views/word_bank_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,13 +10,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Brain Rot App',
-      home: AllCategoriesView()
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => WordBankProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Brain Rot App',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: const WordBankView(categoryName: 'Test Category'),
+      ),
     );
   }
 }
-
