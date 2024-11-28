@@ -149,6 +149,7 @@ void didChangeDependencies() {
     if (gameStateProvider.finished) {
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Summary of Game'),
