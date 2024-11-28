@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:brainrot/models/category.dart';
+import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:brainrot/providers/game_state_provider.dart';
 // import 'package:brainrot/utils/mocker.dart';
 // import 'package:brainrot/views/all_categories_view.dart';
@@ -23,7 +24,7 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
-  late final Timer _gameTimer;
+  late Timer _gameTimer;
   
 
   @override
@@ -31,12 +32,7 @@ class _GameViewState extends State<GameView> {
     super.initState();
     _sensorView();
 
-    final singleUseGameProvider = Provider.of<GameStateProvider>(context, listen: false);
-    singleUseGameProvider.changeCategory(widget.category.category);
-    singleUseGameProvider.setTime(widget.time);
-    _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
-      singleUseGameProvider.decrementTimer();
-    });
+    _restart();
   }
 
   @override
@@ -56,6 +52,7 @@ void didChangeDependencies() {
   void _sensorView() {
       if (Platform.isAndroid || Platform.isIOS) {
     accelerometerEvents.listen((AccelerometerEvent e) {
+      // ignore: use_build_context_synchronously
       final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       // z -> axis representing front to back, x(left to right), y(top to bottom)
       // 9.5 -> threshold set to detect movement with device (facing upward if +9.5, and downward -9.5)
@@ -132,14 +129,16 @@ void didChangeDependencies() {
             ),
           ),
         );
-      } else {
-        return const Scaffold(
-          body: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text('FINISHED'),
-          ),
-        );
-      }
+      } 
+      // else {
+      //   return const Scaffold(
+      //     body: Padding(
+      //       padding: EdgeInsets.all(20.0),
+      //       child: Text('FINISHED'),
+      //     ),
+      //   );
+      // }
+      return const SizedBox.shrink();
     },
   );
 }
@@ -163,8 +162,8 @@ void didChangeDependencies() {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  gameStateProvider.refreshGameState(null);
-                  _restartTimer();
+                  gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time);
+                  _restart();
                 },
                 child: const Text('Restart Game', textAlign: TextAlign.center,),
               ),
@@ -186,6 +185,9 @@ void didChangeDependencies() {
 
   _navigateToDrawing(BuildContext context) {
     // await Future.delayed(const Duration(seconds: 1));
+    final drawingProvider = Provider.of<DrawingProvider>(context, listen: false);
+    drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
+    
     if (context.mounted) {
       final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
@@ -196,16 +198,14 @@ void didChangeDependencies() {
     }
   }
   
-  void _restartTimer() {
+  void _restart() {
+    // _gameTimer.cancel();
     final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);
-    gameStateProvider.setTime(widget.time);
+    gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time);
     
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
+      // print('test');
       gameStateProvider.decrementTimer();
-      
-      if (gameStateProvider.time <= 0) {
-        _gameTimer.cancel(); // Stop the timer if the time runs out
-      }
     });
   }
 }

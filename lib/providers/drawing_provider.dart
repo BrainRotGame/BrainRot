@@ -126,4 +126,10 @@ class DrawingProvider extends ChangeNotifier {
     add(ClearAction());
     // print(pastActions);
   }
+  
+  //Method will completely wipe all drawing data from pastActions and futureActions
+  void wipeDrawing() {
+    _pastActions.removeRange(0, _pastActions.length);
+    _futureActions.removeRange(0, _futureActions.length);
+  }
 }

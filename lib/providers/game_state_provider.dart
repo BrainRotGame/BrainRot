@@ -1,4 +1,5 @@
-import 'package:brainrot/models/collection.dart';
+import 'package:brainrot/models/category.dart';
+// import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 //Provider will maintain score and time of the current game
 class GameStateProvider extends ChangeNotifier{
 
-  final Collection _collectionView;
+  // final Collection _collectionView;
   // final List<Word> _firstListWords;
   int time;
   int correct;
@@ -14,17 +15,15 @@ class GameStateProvider extends ChangeNotifier{
   List<Word> words;
   List<Word> guessedWords;
   bool finished;
-  bool clearDrawing;
 
-  GameStateProvider({required Collection collectionView})
-  : _collectionView = collectionView,
+  GameStateProvider()
+  : 
   time = 0,
   correct = 0,
   skipped = 0,
   words = [],
   guessedWords = [],
-  finished = false,
-  clearDrawing = false;
+  finished = false;
   // _firstListWords = List.from(words);
 
   void setTime(int newTime) {
@@ -51,17 +50,21 @@ class GameStateProvider extends ChangeNotifier{
   }
 
   //Method will refresh the game state, setting all counters to 0 and setting the game state to being played
-  void refreshGameState(List<Word>? newWords) {
+  void refreshGameState({required Category category, required int newTime}) {
     correct = 0;
     skipped = 0;
     // clears list of words
     guessedWords = [];
     finished = false;
 
-    final cat = _collectionView.allCategories();
-    final wordsAll = cat.expand((category) => category.category).toList();
-    wordsAll.shuffle();
-    words = wordsAll;
+    final List<Word> temp = List.from(category.category);
+    temp.shuffle();
+    words = temp;
+
+    time = newTime;
+
+
+    
     //allows for game to reset with new set of words
     // if (newWords != null) {
     //   words = List.from(newWords);
@@ -84,9 +87,7 @@ class GameStateProvider extends ChangeNotifier{
       // words = List.from(_firstListWords);
       // words.shuffle(Random());
     }
-    clearDrawing = true;
     notifyListeners();
-    clearDrawing = false;
   }
 
   //Method will decrement timer
@@ -99,8 +100,4 @@ class GameStateProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void changeCategory(List<Word> category) {
-    category.shuffle();
-    words = category;
-  }
 }

@@ -18,10 +18,6 @@ class DrawView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameStateProvider = Provider.of<GameStateProvider>(context);
-    if (gameStateProvider.clearDrawing) {
-      _clear(context);
-    }
     final gameProvider = Provider.of<GameStateProvider>(context, listen: false);
     return MaterialApp(
       home: Scaffold(

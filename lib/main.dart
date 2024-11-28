@@ -12,8 +12,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => DrawingProvider(width: 800, height: 400)),
-        ChangeNotifierProvider(create: (context) => GameStateProvider(
-        collectionView: gameMocker()))
+        ChangeNotifierProvider(create: (context) => GameStateProvider())
       ],
       child: const MyApp())
   );
