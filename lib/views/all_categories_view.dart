@@ -2,6 +2,8 @@ import 'package:brainrot/providers/collection_provider.dart';
 import 'package:brainrot/views/word_bank_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:brainrot/models/category.dart';
+import 'package:brainrot/views/game_views/game_view.dart';
 
 class AllCategoriesView extends StatelessWidget {
   const AllCategoriesView({super.key});
@@ -38,12 +40,12 @@ class AllCategoriesView extends StatelessWidget {
     );
   }
 
-  void _showCategoryPopup(BuildContext context, String categoryName) {
+  void _showCategoryPopup(BuildContext context, Category category) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('You selected "$categoryName"'),
+          title: Text('You selected "${category.categoryName}"'),
           content: const Text('Pick a timer'),
           actions: [
             TextButton(
@@ -53,16 +55,17 @@ class AllCategoriesView extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // implement here to jump to game view
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                navigateGame(context: context, category: category, time: 60);
               },
               child: const Text('1 min'),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => navigateGame(context: context, category: category, time: 120),
               child: const Text('2 min'),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => navigateGame(context: context, category: category, time: 300),
               child: const Text('5 min'),
             ),
           ],
@@ -97,7 +100,7 @@ class AllCategoriesView extends StatelessWidget {
         itemBuilder: (context, index) {
           final category = categories[index];
           return GestureDetector(
-            onTap: () => _showCategoryPopup(context, category.categoryName),
+            onTap: () => _showCategoryPopup(context, category),
             onLongPress: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -119,6 +122,17 @@ class AllCategoriesView extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+  
+  void navigateGame({required BuildContext context, required Category category, required int time}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => GameView(
+          category: category,
+          time: 60
+        )
+      )
     );
   }
 }

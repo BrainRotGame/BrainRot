@@ -173,7 +173,7 @@ void didChangeDependencies() {
                   // close the dialog box
                   Navigator.of(context).pop();
                   // forcefully exit the app entirely
-                  exit(0);
+                  Navigator.pop(context);
                 },
                 child: const Text("Exit"),
               ),
