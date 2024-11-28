@@ -16,8 +16,6 @@ class WordBankProvider extends ChangeNotifier {
     if (index != -1) {
       _words[index] = updatedWord;
       notifyListeners();
-    } else {
-      print('Word with id $id not found in WordBankProvider');
     }
   }
 

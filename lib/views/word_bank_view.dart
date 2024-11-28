@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/models/word.dart';
-// import 'package:brainrot/providers/word_bank_provider.dart';
 import 'package:brainrot/views/create_word_view.dart';
 
 class WordBankView extends StatelessWidget {
@@ -74,7 +73,6 @@ class WordBankView extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          print('Editing word: ${word.wordName} with id: ${word.id}');
                           final updatedWord = await Navigator.push<Word>(
                             context,
                             MaterialPageRoute(
@@ -87,8 +85,6 @@ class WordBankView extends StatelessWidget {
 
                           if (updatedWord != null) {
                             category.upsertCategory(updatedWord);
-                          } else {
-                            print('No change made to the word');
                           }
                         },
                         child: Column(
