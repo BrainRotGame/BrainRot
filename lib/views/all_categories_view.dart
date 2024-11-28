@@ -126,11 +126,12 @@ class AllCategoriesView extends StatelessWidget {
   }
   
   void navigateGame({required BuildContext context, required Category category, required int time}) {
+    Navigator.of(context).pop();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => GameView(
           category: category,
-          time: 60
+          time: time
         )
       )
     );
