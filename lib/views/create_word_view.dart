@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:brainrot/models/word.dart';
-import 'package:brainrot/providers/word_bank_provider.dart';
+import 'package:brainrot/models/category.dart';
 
 class CreateWordView extends StatefulWidget {
-  final Word? word;
-  final int? index;
+  final Word? word; // Existing word to edit (null for a new word)
+  final int? index; // Index of the word in the list
+  final Category category; // The category this word belongs to
 
-  const CreateWordView({super.key, this.word, this.index});
+  const CreateWordView({super.key, this.word, this.index, required this.category});
 
   @override
   State<CreateWordView> createState() => _CreateWordViewState();
 }
 
 class _CreateWordViewState extends State<CreateWordView> {
-  late TextEditingController _wordNameController;
-  late TextEditingController _descriptionController;
-  late TextEditingController _hintController;
+  // Local state variables for the form fields
+  String currentWordName = '';
+  String currentDescription = '';
+  String currentHint = '';
 
   @override
   void initState() {
     super.initState();
 
-    // Initialize controllers with existing word data (if editing) or empty strings
-    _wordNameController = TextEditingController(text: widget.word?.wordName ?? '');
-    _descriptionController = TextEditingController(text: widget.word?.description ?? '');
-    _hintController = TextEditingController(text: widget.word?.hint ?? '');
-  }
-
-  @override
-  void dispose() {
-    _wordNameController.dispose();
-    _descriptionController.dispose();
-    _hintController.dispose();
-    super.dispose();
+    // Initialize state variables with existing data (if editing)
+    currentWordName = widget.word?.wordName ?? '';
+    currentDescription = widget.word?.description ?? '';
+    currentHint = widget.word?.hint ?? '';
   }
 
   @override
@@ -44,58 +37,59 @@ class _CreateWordViewState extends State<CreateWordView> {
       appBar: AppBar(
         title: Text(isEditing ? 'Edit Word' : 'Create Word'),
       ),
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _wordNameController,
-              decoration: const InputDecoration(
-                labelText: 'Word Name',
-                border: OutlineInputBorder(),
-              ),
+            TextFormField(
+              initialValue: currentWordName,
+              decoration: const InputDecoration(labelText: 'Word Name'),
+              onChanged: (value) {
+                setState(() {
+                  currentWordName = value;
+                });
+              },
             ),
             const SizedBox(height: 16),
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Description',
-                border: OutlineInputBorder(),
-              ),
+            TextFormField(
+              initialValue: currentDescription,
+              decoration: const InputDecoration(labelText: 'Description'),
+              onChanged: (value) {
+                setState(() {
+                  currentDescription = value;
+                });
+              },
             ),
             const SizedBox(height: 16),
-            TextField(
-              controller: _hintController,
-              decoration: const InputDecoration(
-                labelText: 'Hint (Optional)',
-                border: OutlineInputBorder(),
-              ),
+            TextFormField(
+              initialValue: currentHint,
+              decoration: const InputDecoration(labelText: 'Hint (Optional)'),
+              onChanged: (value) {
+                setState(() {
+                  currentHint = value;
+                });
+              },
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () {
-                final word = Word(
-                  wordName: _wordNameController.text,
-                  description: _descriptionController.text,
-                  hint: _hintController.text.isNotEmpty ? _hintController.text : null,
-                );
-
-                final wordBankProvider = Provider.of<WordBankProvider>(context, listen: false);
-
-                if (isEditing && widget.index != null) {
-                  wordBankProvider.updateWord(widget.index!, word);
-                } else {
-                  wordBankProvider.addWord(word);
-                }
-
-                Navigator.pop(context);
-              },
+              onPressed: () => _saveAndPop(context),
               child: Text(isEditing ? 'Update Word' : 'Save Word'),
             ),
           ],
         ),
       ),
     );
+  }
+
+  /// Handles saving or updating the word and pops back to the previous screen.
+  void _saveAndPop(BuildContext context) {
+    final updatedWord = Word(
+      id: widget.word?.id ?? DateTime.now().millisecondsSinceEpoch,
+      wordName: currentWordName,
+      description: currentDescription,
+      hint: currentHint.isNotEmpty ? currentHint : null,
+    );
+
+    Navigator.pop(context, updatedWord);
   }
 }

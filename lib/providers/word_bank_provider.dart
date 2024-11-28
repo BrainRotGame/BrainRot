@@ -11,10 +11,18 @@ class WordBankProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateWord(int index, Word updateWord) {
-    if (index >= 0 && index < _words.length) {
-      _words[index] = updateWord;
+  void updateWordById(int id, Word updatedWord) {
+    final index = _words.indexWhere((w) => w.id == id);
+    if (index != -1) {
+      _words[index] = updatedWord;
       notifyListeners();
+    } else {
+      print('Word with id $id not found in WordBankProvider');
     }
+  }
+
+  void removeWordById(int id) {
+    _words.removeWhere((w) => w.id == id);
+    notifyListeners();
   }
 }
