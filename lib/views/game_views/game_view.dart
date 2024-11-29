@@ -16,6 +16,7 @@ import 'dart:io';
 class GameView extends StatefulWidget {
   final Category category;
   final int time;
+  
 
   const GameView({super.key, required this.time, required this.category});
 
@@ -25,6 +26,7 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> {
   late Timer _gameTimer;
+  bool _currDrawing = false;
   
 
   @override
@@ -146,6 +148,10 @@ void didChangeDependencies() {
   // method created to display a dialog box in order
   // for the user to see the summary of the game they played
   _gameFinished(BuildContext context, GameStateProvider gameStateProvider) {
+    if(_currDrawing) {
+      _currDrawing = false;
+      Navigator.pop(context);
+    }
     if (gameStateProvider.finished) {
       showDialog(
         context: context,
@@ -190,11 +196,12 @@ void didChangeDependencies() {
     drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
     
     if (context.mounted) {
-      final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
+      _currDrawing = true;
+      // final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DrawView(width: 800, height: 400, provider: gameStateProvider,)));
+          builder: (context) => const DrawView(width: 800, height: 400)));
           // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }
