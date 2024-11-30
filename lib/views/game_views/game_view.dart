@@ -201,7 +201,13 @@ void didChangeDependencies() {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const DrawView(width: 800, height: 400)));
+          builder: (context) => const DrawView(width: 800, height: 400))
+          ).then((_) {
+            // This block executes when DrawView is popped (user navigates back)
+            setState(() {
+              _currDrawing = false; // Reset the boolean to false
+            });
+          });
           // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }

@@ -14,7 +14,7 @@ class DrawView extends StatelessWidget {
   final double height;
 
   const DrawView({super.key, required this.width, required this.height});
-  final GameStateProvider provider;
+  // final GameStateProvider provider;
 
   @override
   Widget build(BuildContext context) {
