@@ -21,6 +21,9 @@ class DrawView extends StatelessWidget {
     // final gameProvider = Provider.of<GameStateProvider>(context, listen: false);
     return Consumer<GameStateProvider>(
       builder: (context, gameProvider, child) {
+        if (gameProvider.time == 0) {
+          _popBack(context);
+        }
         return MaterialApp(
           home: Scaffold(
             appBar:
@@ -48,17 +51,42 @@ class DrawView extends StatelessWidget {
                         color: const Color.fromARGB(255, 197, 235, 253),
                       ),
                       child: Column(children: [
-                        Text('Time Remaining: ${gameProvider.time}'),
+                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}'),
                         Text('Correct Guesses: ${gameProvider.correct}'),
                         Text('Skipped: ${gameProvider.skipped}'),],)),
                         // Text('Correct Guesses: ${gameProvider.time}'),
                         // Text('Correct Guesses: $correct'),
                         // Text('Skipped: $skipped'),],)),
                   ),
+                  if(gameProvider.hint)
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(gameProvider.words[0].hint ?? '')
+                      ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Semantics(
+                        label: 'toggle hint button',
+                        excludeSemantics: true,
+                        child: IconButton(
+                          style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 192, 235, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
+                          onPressed: () {
+                            gameProvider.toggleHint();
+                          }, 
+                          icon: const Icon(Icons.question_mark)),
+                      )
+                      ),
+                  ),
                   Container(
                     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                     child: DrawArea(width: width, height: height),
                   ),
+                  
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Semantics(

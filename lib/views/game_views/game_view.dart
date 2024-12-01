@@ -26,7 +26,6 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> {
   late Timer _gameTimer;
-  bool _currDrawing = false;
   
 
   @override
@@ -90,7 +89,13 @@ void didChangeDependencies() {
               children: [
                 ElevatedButton(
                   onPressed: () => gameStateProvider.incrementCorrect(),
-                  child: const Text("Guessed Correct"),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Icon(Icons.arrow_upward_rounded),
+                    Text('Flip up or tap for guessing correctly'),
+                    Icon(Icons.arrow_upward_rounded),
+                  ],)
                 ),
                 Expanded(
                   flex: 1,
@@ -107,7 +112,7 @@ void didChangeDependencies() {
                         ),
                         child: Column(
                           children: [
-                            Text('Time Remaining: ${gameStateProvider.time}'),
+                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}'),
                             Text('Correct Guesses: ${gameStateProvider.correct}'),
                             Text('Skipped: ${gameStateProvider.skipped}'),
                           ],
@@ -125,7 +130,13 @@ void didChangeDependencies() {
                 ),
                 ElevatedButton(
                   onPressed: () => gameStateProvider.incrementSkip(),
-                  child: const Text("Skip"),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Icon(Icons.arrow_downward_rounded),
+                    Text('Flip down or tap for guessing correctly'),
+                    Icon(Icons.arrow_downward_rounded),
+                  ],)
                 ),
               ],
             ),
@@ -148,10 +159,10 @@ void didChangeDependencies() {
   // method created to display a dialog box in order
   // for the user to see the summary of the game they played
   _gameFinished(BuildContext context, GameStateProvider gameStateProvider) {
-    if(_currDrawing) {
-      _currDrawing = false;
-      Navigator.pop(context);
-    }
+    // if(_currDrawing) {
+    //   _currDrawing = false;
+    //   Navigator.pop(context);
+    // }
     if (gameStateProvider.finished) {
       showDialog(
         context: context,
@@ -169,7 +180,6 @@ void didChangeDependencies() {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time);
                   _restart();
                 },
                 child: const Text('Restart Game', textAlign: TextAlign.center,),
@@ -196,18 +206,12 @@ void didChangeDependencies() {
     drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
     
     if (context.mounted) {
-      _currDrawing = true;
       // final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const DrawView(width: 800, height: 400))
-          ).then((_) {
-            // This block executes when DrawView is popped (user navigates back)
-            setState(() {
-              _currDrawing = false; // Reset the boolean to false
-            });
-          });
+          );
           // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }
@@ -215,6 +219,7 @@ void didChangeDependencies() {
   void _restart() {
     // _gameTimer.cancel();
     final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);
+    // print(widget.time);
     gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time);
     
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
