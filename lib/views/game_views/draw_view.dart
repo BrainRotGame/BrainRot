@@ -61,9 +61,14 @@ class DrawView extends StatelessWidget {
                   if(gameProvider.hint)
                   Align(
                     alignment: Alignment.topCenter,
-                    child: Padding(
+                    child: Container(
                       padding: const EdgeInsets.all(10),
-                      child: Text(gameProvider.words[0].hint ?? '')
+                      margin: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 192, 235, 255)
+                      ),
+                      child: Text(gameProvider.words[0].hint ?? 'No hint available')
                       ),
                   ),
                   Align(
@@ -120,6 +125,7 @@ class DrawView extends StatelessWidget {
   }
 
   _popBack(BuildContext context) {
+    Provider.of<GameStateProvider>(context,listen: false).hint = false;
     Navigator.pop(context);
   }
 
