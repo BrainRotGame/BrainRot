@@ -18,8 +18,9 @@ class CollectionProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addCategory(category) {
-    _collection.upsertCategory(category);
+  void addCategory(String category) {
+    final newCategory = Category(categoryName: category);
+    _collection.upsertCategory(newCategory);
     notifyListeners();
   }
 }

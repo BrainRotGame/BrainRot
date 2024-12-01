@@ -9,20 +9,21 @@ part 'category.g.dart';
 class Category extends ChangeNotifier {
   Id? id;
   final String categoryName;
-  final _category;
+  final _category = IsarLinks<Word>();
   // final Isar _isar;
 
   // Constructor
   // Category({required this.categoryName, List<Word>? words})
   //     : _category = words ?? [];
-  Category({required this.categoryName}) 
-      : _category = IsarLinks<Word>();
+  Category({required this.categoryName});
 
   //Constructor creates a Category from a given name, isar, and list of entries
   //@param: takes in a name, isar, and list of entries
-  Category.recreate({required this.categoryName, required List<Word> category}) :
+  Category.recreate({required this.categoryName, required List<Word> category}) {
+    _category.addAll(category);
+  }
   // _entries = List.from(entries),
-  _category = category;
+  
   // _isar = isar;
 
   // Getter method for the list of words
@@ -30,7 +31,7 @@ class Category extends ChangeNotifier {
   List<Word> get category => List.unmodifiable(_category);
 
   // Add or update a word in the category
-  void upsertCategory(Word word) async {
+  void upsertCategory(Word word) {
 
     // Find the index of the word with the same id
     final index = _category.indexWhere((w) => w.id == word.id);
@@ -44,6 +45,7 @@ class Category extends ChangeNotifier {
     }
     // notifyListeners();
   }
+
 
   // Remove a word by its id
   void removeWordById(int id) {
