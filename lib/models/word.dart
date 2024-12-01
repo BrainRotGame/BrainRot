@@ -2,8 +2,13 @@
 // description
 // hint(optional)
 
+import 'package:isar/isar.dart';
+part 'word.g.dart';
+
+@collection
 class Word {
-  final int id;
+  // final int id;
+  Id? id;
   final String wordName;
   final String description;
   final String? hint;

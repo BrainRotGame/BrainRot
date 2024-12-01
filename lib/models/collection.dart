@@ -1,16 +1,19 @@
 import 'package:brainrot/models/category.dart';
+import 'package:isar/isar.dart';
 
-class Collection {
+class CategoryCollection {
   final List<Category> _collection;
+  final Isar _isar;
 
   // Constructor
-  Collection() : _collection = [];
+  // Collection() : _collection = [];
+  CategoryCollection({required Isar isar}) : _collection = isar.categorys.where().findAllSync(), _isar = isar;
 
   // Getter method for collection
   List<Category> get collection => List.from(_collection);
 
   // Add or update category
-  void upsertCategory(Category category) {
+  void upsertCategory(Category category) async {
     // Check if the category already exists (case-insensitive)
     final existingIndex = _collection.indexWhere(
       (existingCategory) =>
@@ -26,6 +29,10 @@ class Collection {
       _collection.add(category);
       //print('Added category "${category.categoryName}".');
     }
+    await _isar.writeTxn(() async {
+      await _isar.categorys.put(category);
+    });
+    
   }
 
   // Helper to check if a category exists in the collection

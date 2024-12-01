@@ -1,19 +1,36 @@
+import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
+part 'category.g.dart';
+
+@collection
 class Category extends ChangeNotifier {
+  Id? id;
   final String categoryName;
-  final List<Word> _category;
+  final _category;
+  // final Isar _isar;
 
   // Constructor
-  Category({required this.categoryName, List<Word>? words})
-      : _category = words ?? [];
+  // Category({required this.categoryName, List<Word>? words})
+  //     : _category = words ?? [];
+  Category({required this.categoryName}) 
+      : _category = IsarLinks<Word>();
+
+  //Constructor creates a Category from a given name, isar, and list of entries
+  //@param: takes in a name, isar, and list of entries
+  Category.recreate({required this.categoryName, required List<Word> category}) :
+  // _entries = List.from(entries),
+  _category = category;
+  // _isar = isar;
 
   // Getter method for the list of words
+  @ignore
   List<Word> get category => List.unmodifiable(_category);
 
   // Add or update a word in the category
-  void upsertCategory(Word word) {
+  void upsertCategory(Word word) async {
 
     // Find the index of the word with the same id
     final index = _category.indexWhere((w) => w.id == word.id);
@@ -25,7 +42,7 @@ class Category extends ChangeNotifier {
       // Add a new word
       _category.add(word);
     }
-    notifyListeners();
+    // notifyListeners();
   }
 
   // Remove a word by its id
@@ -42,9 +59,10 @@ class Category extends ChangeNotifier {
 
   // Helper method to clone the category
   Category clone() {
-    return Category(
-      categoryName: categoryName,
-      words: List.from(_category),
-    );
+    // return Category(
+    //   categoryName: categoryName,
+    //   words: List.from(_category),
+    // );
+    return Category.recreate(categoryName: categoryName, category: _category);
   }
 }

@@ -31,6 +31,12 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.0.5
+  isar:
+    version: 3.1.8
+    hosted: https://pub.isar-community.dev/
+  isar_flutter_libs:
+    version: 3.1.8
+    hosted: https://pub.isar-community.dev/
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,10 +44,16 @@ dependencies:
   cupertino_icons: ^1.0.8
   # provider: ^6.1.2
   sensors_plus: ^2.0.2
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: any
+  isar_generator:
+    version: 3.1.8
+    hosted: https://pub.isar-community.dev/
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
