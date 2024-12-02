@@ -24,7 +24,7 @@ class WordBankView extends StatelessWidget {
               onPressed: () async {
                 // Create a new word with id = 0 for adding
                 final newWord = Word(
-                  id: 0, // Placeholder ID for new words
+                  id: null, // Placeholder ID for new words
                   wordName: '',
                   description: '',
                   hint: null,
@@ -41,7 +41,7 @@ class WordBankView extends StatelessWidget {
                 );
 
                 if (addedWord != null) {
-                  category.upsertCategory(isar: isar, word: addedWord);
+                  category.upsertWord(isar: isar, word: addedWord);
                   // print(category.loadWords(isar));
                 }
               },
@@ -53,6 +53,7 @@ class WordBankView extends StatelessWidget {
         body: Consumer<Category>(
           builder: (context, category, _) {
             final allWords = category.getWords(isar);
+            print(allWords);
 
             return Column(
               children: [
@@ -88,7 +89,7 @@ class WordBankView extends StatelessWidget {
                           );
 
                           if (updatedWord != null) {
-                            category.upsertCategory(isar: isar, word: updatedWord);
+                            category.upsertWord(isar: isar, word: updatedWord);
                             // print(category.loadWords(isar));
                           }
                         },

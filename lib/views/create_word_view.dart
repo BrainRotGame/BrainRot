@@ -84,7 +84,7 @@ class _CreateWordViewState extends State<CreateWordView> {
   /// Handles saving or updating the word and pops back to the previous screen.
   void _saveAndPop(BuildContext context) {
     final updatedWord = Word(
-      id: widget.word?.id ?? DateTime.now().millisecondsSinceEpoch,
+      id: null,
       wordName: currentWordName,
       description: currentDescription,
       hint: currentHint.isNotEmpty ? currentHint : null,

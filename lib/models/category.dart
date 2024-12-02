@@ -10,7 +10,7 @@ class Category extends ChangeNotifier {
   Id? id;
   final String categoryName;
   // final _category = IsarLinks<Word>();
-  final List<Id> _words = [];
+  final List<Id> words = [];
   // final Isar _isar;
 
   // Constructor
@@ -53,27 +53,31 @@ class Category extends ChangeNotifier {
   // }
 
   List<Word> getWords(Isar isar) {
-  return isar.words.filter().anyOf(_words, (q, id) => q.idEqualTo(id)).findAllSync();
+  // return isar.words.filter().anyOf(words, (q, id) => q.idEqualTo(id)).findAllSync();
+  return isar.words.where((word) => this.words.contains()).findAllSync();
+  // return isar.words.filter().id;
   } 
 
 
-  void upsertCategory({required Isar isar, required Word word}) async{
+  void upsertWord({required Isar isar, required Word word}) async{
+    // print('word ID: ${word.id}');
     await isar.writeTxn(() async {
       // Save the Word if it's new
       await isar.words.put(word);
       
       // Store the Word's ID in the Category
-      if (!_words.contains(word.id)) {
-        _words.add(word.id!);
+      if (!words.contains(word.id)) {
+        words.add(word.id!);
         await isar.categorys.put(this); // Update the Category
       }
     });
+    // print(words);
     
   }
 
   void removeWord({required Isar isar, required Word word}) async {
     await isar.writeTxn(() async {
-      _words.remove(word.id);
+      words.remove(word.id);
       await isar.categorys.put(this); // Save the updated Category
     });
   }

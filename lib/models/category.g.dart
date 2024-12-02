@@ -26,6 +26,11 @@ const CategorySchema = CollectionSchema(
       id: 1,
       name: r'hasListeners',
       type: IsarType.bool,
+    ),
+    r'words': PropertySchema(
+      id: 2,
+      name: r'words',
+      type: IsarType.longList,
     )
   },
   estimateSize: _categoryEstimateSize,
@@ -49,6 +54,7 @@ int _categoryEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.categoryName.length * 3;
+  bytesCount += 3 + object.words.length * 8;
   return bytesCount;
 }
 
@@ -60,6 +66,7 @@ void _categorySerialize(
 ) {
   writer.writeString(offsets[0], object.categoryName);
   writer.writeBool(offsets[1], object.hasListeners);
+  writer.writeLongList(offsets[2], object.words);
 }
 
 Category _categoryDeserialize(
@@ -86,6 +93,8 @@ P _categoryDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readBool(offset)) as P;
+    case 2:
+      return (reader.readLongList(offset) ?? []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -391,6 +400,145 @@ extension CategoryQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsElementEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'words',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      wordsElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'words',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'words',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'words',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition>
+      wordsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> wordsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
 }
 
 extension CategoryQueryObject
@@ -478,6 +626,12 @@ extension CategoryQueryWhereDistinct
       return query.addDistinctBy(r'hasListeners');
     });
   }
+
+  QueryBuilder<Category, Category, QDistinct> distinctByWords() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'words');
+    });
+  }
 }
 
 extension CategoryQueryProperty
@@ -497,6 +651,12 @@ extension CategoryQueryProperty
   QueryBuilder<Category, bool, QQueryOperations> hasListenersProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hasListeners');
+    });
+  }
+
+  QueryBuilder<Category, List<int>, QQueryOperations> wordsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'words');
     });
   }
 }
