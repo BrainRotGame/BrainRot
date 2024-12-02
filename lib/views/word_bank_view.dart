@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/models/word.dart';
@@ -6,8 +7,10 @@ import 'package:brainrot/views/create_word_view.dart';
 
 class WordBankView extends StatelessWidget {
   final Category category;
+  final Isar isar;
 
-  const WordBankView({super.key, required this.category});
+  const WordBankView({super.key, required this.category, required this.isar});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,8 @@ class WordBankView extends StatelessWidget {
                 );
 
                 if (addedWord != null) {
-                  category.upsertCategory(addedWord);
+                  category.upsertCategory(isar: isar, word: addedWord);
+                  // print(category.loadWords(isar));
                 }
               },
               icon: const Icon(Icons.add, size: 36),
@@ -48,7 +52,7 @@ class WordBankView extends StatelessWidget {
         ),
         body: Consumer<Category>(
           builder: (context, category, _) {
-            final allWords = category.category;
+            final allWords = category.getWords(isar);
 
             return Column(
               children: [
@@ -84,7 +88,8 @@ class WordBankView extends StatelessWidget {
                           );
 
                           if (updatedWord != null) {
-                            category.upsertCategory(updatedWord);
+                            category.upsertCategory(isar: isar, word: updatedWord);
+                            // print(category.loadWords(isar));
                           }
                         },
                         child: Column(

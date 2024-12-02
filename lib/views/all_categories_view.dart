@@ -1,12 +1,14 @@
 import 'package:brainrot/providers/collection_provider.dart';
 import 'package:brainrot/views/word_bank_view.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/views/game_views/game_view.dart';
 
 class AllCategoriesView extends StatelessWidget {
-  const AllCategoriesView({super.key});
+  const AllCategoriesView({super.key, required this.isar});
+  final Isar isar;
 
   void _showAddCategoryDialog(BuildContext context) {
     final TextEditingController controller = TextEditingController();
@@ -104,7 +106,7 @@ class AllCategoriesView extends StatelessWidget {
             onLongPress: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => WordBankView(category: category),
+                  builder: (_) => WordBankView(isar: isar, category: category),
                 ),
               );
             },
@@ -130,6 +132,7 @@ class AllCategoriesView extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => GameView(
+          isar: isar,
           category: category,
           time: time
         )

@@ -9,16 +9,18 @@ import 'package:brainrot/providers/game_state_provider.dart';
 // import 'package:brainrot/views/all_categories_view.dart';
 import 'package:brainrot/views/game_views/draw_view.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:io';
 
 class GameView extends StatefulWidget {
+  final Isar isar;
   final Category category;
   final int time;
   
 
-  const GameView({super.key, required this.time, required this.category});
+  const GameView({super.key, required this.isar, required this.time, required this.category});
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -220,7 +222,7 @@ void didChangeDependencies() {
     // _gameTimer.cancel();
     final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);
     // print(widget.time);
-    gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time);
+    gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time, isar: widget.isar);
     
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
       // print('test');

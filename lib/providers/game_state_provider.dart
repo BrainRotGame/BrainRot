@@ -2,6 +2,7 @@ import 'package:brainrot/models/category.dart';
 // import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 //GameStateProvider will keep track of the game state when a game's being played
 //Provider will maintain score and time of the current game
@@ -52,14 +53,14 @@ class GameStateProvider extends ChangeNotifier{
   }
 
   //Method will refresh the game state, setting all counters to 0 and setting the game state to being played
-  void refreshGameState({required Category category, required int newTime}) {
+  void refreshGameState({required Category category, required int newTime, required Isar isar}) {
     correct = 0;
     skipped = 0;
     // clears list of words
     guessedWords = [];
     finished = false;
 
-    final List<Word> temp = List.from(category.category);
+    final List<Word> temp = List.from(category.getWords(isar));
     temp.shuffle();
     words = temp;
 

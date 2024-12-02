@@ -24,14 +24,15 @@ void main() async {
         ChangeNotifierProvider(create: (_) => GameStateProvider()),
         ChangeNotifierProvider(create: (_) => DrawingProvider(width: 800, height: 400)),
       ],
-      child: const MyApp(),
+      child: MyApp(isar: isar),
     ),
   );
   SemanticsBinding.instance.ensureSemantics();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Isar isar;
+  const MyApp({super.key, required this.isar});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AllCategoriesView(),
+      home: AllCategoriesView(isar: isar),
     );
   }
 }
