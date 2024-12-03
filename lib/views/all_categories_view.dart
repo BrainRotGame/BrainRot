@@ -86,6 +86,7 @@ class AllCategoriesView extends StatelessWidget {
             label: 'Add Category',
             excludeSemantics: false,
             child: IconButton(
+              tooltip: 'Add New Category',
               icon: const Icon(Icons.add),
               onPressed: () => _showAddCategoryDialog(context),
             ),
