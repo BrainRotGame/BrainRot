@@ -16,7 +16,7 @@ import 'dart:io';
 class GameView extends StatefulWidget {
   final Category category;
   final int time;
-  
+
 
   const GameView({super.key, required this.time, required this.category});
 
@@ -26,7 +26,7 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> {
   late Timer _gameTimer;
-  
+
 
   @override
   void initState() {
@@ -42,28 +42,28 @@ class _GameViewState extends State<GameView> {
     super.dispose();
   }
 
-@override
-// ensuring context and widget tree are available
-// in which they can be accessed
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  // called once we know that the context has been initialized
-  _sensorView();  // Start listening after context is available
-}
   void _sensorView() {
-      if (Platform.isAndroid || Platform.isIOS) {
-    accelerometerEvents.listen((AccelerometerEvent e) {
-      // ignore: use_build_context_synchronously
-      final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
-      // z -> axis representing front to back, x(left to right), y(top to bottom)
-      // 9.5 -> threshold set to detect movement with device (facing upward if +9.5, and downward -9.5)
-      // motion of sensor moving up, increment correct
-      if (e.z > 9.5) {
-        gameStateProvider.incrementCorrect();
-      } else if (e.z < -9.5) { // motion of sensor moving down, increment skip
-        gameStateProvider.incrementSkip();
-      }
-    });
+    if (Platform.isAndroid || Platform.isIOS) {
+      bool deviceFlipsUp = false; // user sets the device to face up
+      bool deviceFlipsDown = false; // user sets the device to face down
+      accelerometerEvents.listen((AccelerometerEvent e) {
+        // ignore: use_build_context_synchronously
+        final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
+        // z -> axis representing front to back, x(left to right), y(top to bottom)
+        // 9.5 -> threshold set to detect movement with device (facing upward if +9.5, and downward -9.5)
+        // motion of sensor moving up, increment correct
+        // ! the devices have yet to be flagged in order to prevent any repetition
+        // occuring
+        if (e.z > 9.5 && !deviceFlipsUp) {
+          deviceFlipsUp = true;
+          deviceFlipsDown = false;
+          gameStateProvider.incrementCorrect();
+        } else if (e.z < -9.5 && !deviceFlipsDown) { // motion of sensor moving down, increment skip
+          deviceFlipsDown = true;
+          deviceFlipsUp = false;
+          gameStateProvider.incrementSkip();
+        }
+      });
     }
   }
 
@@ -142,7 +142,7 @@ void didChangeDependencies() {
             ),
           ),
         );
-      } 
+      }
       // else {
       //   return const Scaffold(
       //     body: Padding(
@@ -204,7 +204,7 @@ void didChangeDependencies() {
     // await Future.delayed(const Duration(seconds: 1));
     final drawingProvider = Provider.of<DrawingProvider>(context, listen: false);
     drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
-    
+
     if (context.mounted) {
       // final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
@@ -215,13 +215,13 @@ void didChangeDependencies() {
           // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }
-  
+
   void _restart() {
     // _gameTimer.cancel();
     final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);
     // print(widget.time);
     gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time);
-    
+
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
       // print('test');
       gameStateProvider.decrementTimer();
