@@ -2,6 +2,7 @@
 // description
 // hint(optional)
 
+import 'package:brainrot/models/category.dart';
 import 'package:isar/isar.dart';
 part 'word.g.dart';
 
@@ -12,6 +13,8 @@ class Word {
   final String wordName;
   final String description;
   final String? hint;
+
+  final IsarLinks<Category> categories = IsarLinks<Category>(); // To link back to categories
 
   // constructor
   Word({

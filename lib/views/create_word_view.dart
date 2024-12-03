@@ -18,19 +18,21 @@ class _CreateWordViewState extends State<CreateWordView> {
   String currentWordName = '';
   String currentDescription = '';
   String currentHint = '';
+  bool error = false;
 
   @override
   void initState() {
     super.initState();
 
     // Initialize state variables with existing data (if editing)
-    currentWordName = widget.word?.wordName ?? '';
-    currentDescription = widget.word?.description ?? '';
-    currentHint = widget.word?.hint ?? '';
+    currentWordName = widget.word.wordName;
+    currentDescription = widget.word.description;
+    currentHint = widget.word.hint ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unnecessary_null_comparison
     final isEditing = widget.word != null;
 
     return Scaffold(
@@ -65,6 +67,7 @@ class _CreateWordViewState extends State<CreateWordView> {
               initialValue: currentHint,
               decoration: const InputDecoration(labelText: 'Hint (Optional)'),
               onChanged: (value) {
+                // print(value);
                 setState(() {
                   currentHint = value;
                 });
@@ -75,6 +78,8 @@ class _CreateWordViewState extends State<CreateWordView> {
               onPressed: () => _saveAndPop(context),
               child: Text(isEditing ? 'Update Word' : 'Save Word'),
             ),
+            if(error)
+            const Padding(padding: EdgeInsets.all(5),child: Text('Cannot update term without a name'))
           ],
         ),
       ),
@@ -83,14 +88,22 @@ class _CreateWordViewState extends State<CreateWordView> {
 
   /// Handles saving or updating the word and pops back to the previous screen.
   void _saveAndPop(BuildContext context) async {
-    final updatedWord = Word.withUpdatedData(original: widget.word, newWordName: currentWordName, newDescription: currentDescription, newHint: currentHint.isNotEmpty ? currentHint : null);
-    // final updatedWord = Word(
-    //   id: null,
-    //   wordName: currentWordName,
-    //   description: currentDescription,
-    //   hint: currentHint.isNotEmpty ? currentHint : null,
-    // );
+    if(currentWordName.isNotEmpty) {
+      final updatedWord = Word.withUpdatedData(original: widget.word, newWordName: currentWordName, newDescription: currentDescription, newHint: currentHint);
+      // final updatedWord = Word(
+      //   id: null,
+      //   wordName: currentWordName,
+      //   description: currentDescription,
+      //   hint: currentHint.isNotEmpty ? currentHint : null,
+      // );
 
-    Navigator.pop(context, updatedWord);
+      Navigator.pop(context, updatedWord);
+    }
+    else {
+      setState(() {
+        error = true;
+      });
+    }
+    
   }
 }

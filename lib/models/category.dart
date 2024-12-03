@@ -1,4 +1,4 @@
-import 'package:brainrot/models/collection.dart';
+// import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
@@ -10,13 +10,13 @@ class Category extends ChangeNotifier {
   Id? id;
   final String categoryName;
   // final _category = IsarLinks<Word>();
-  List<int> words;
+  IsarLinks<Word> words = IsarLinks<Word>();
   // final Isar _isar;
 
   // Constructor
   // Category({required this.categoryName, List<Word>? words})
   //     : _category = words ?? [];
-  Category({required this.categoryName}) : words = [];
+  Category({required this.categoryName});
 
   //Constructor creates a Category from a given name, isar, and list of entries
   //@param: takes in a name, isar, and list of entries
@@ -52,37 +52,61 @@ class Category extends ChangeNotifier {
   //   return _category.toList();
   // }
 
+  // List<Word> getWords(Isar isar) {
+  //   // final wordsLookup = words;
+  //   // List<Word> temp = 
+  //   return isar.words.filter().anyOf(words, (q, id) => q.idEqualTo(id)).findAllSync();
+  //   // return isar.words.where((words) => words.).findAllSync();
+  // } 
   List<Word> getWords(Isar isar) {
-    // final wordsLookup = words;
-    // List<Word> temp = 
-    return isar.words.filter().anyOf(words, (q, id) => q.idEqualTo(id)).findAllSync();
-    // return isar.words.where((words) => words.).findAllSync();
-  } 
+    words.loadSync(); // Ensure links are loaded
+    return words.toList();
+  }
 
-
-  void upsertWord({required Isar isar, required Word word}) async{
-    // print('word ID: ${word.id}');
-    await isar.writeTxn(() async {
-      // Save the Word if it's new
-      await isar.words.put(word);
-      
-      // Store the Word's ID in the Category
-      if (!words.contains(word.id)) {
-        words.add(word.id!);
-        await isar.categorys.put(this); // Update the Category
-      }
+  void upsertWord({required Isar isar, required Word word}) {
+    isar.writeTxnSync(() {
+      isar.words.putSync(word); // Save the word synchronously
+      words.add(word);          // Link word to category synchronously
+      isar.categorys.putSync(this); // Save updated category synchronously
     });
-    // print(words);
+
     notifyListeners();
-    
   }
 
-  void removeWord({required Isar isar, required Word word}) async {
-    await isar.writeTxn(() async {
-      words.remove(word.id);
-      await isar.categorys.put(this); // Save the updated Category
+  void removeWord({required Isar isar, required Word word}) {
+    isar.writeTxnSync(() {
+      isar.words.deleteSync(word.id!);
+      words.remove(word);
+      isar.categorys.putSync(this); 
     });
-  }
+
+  notifyListeners();
+}
+
+  // void upsertWord({required Isar isar, required Word word}) async{
+  //   // print('word ID: ${word.id}');
+  //   await isar.writeTxn(() async {
+  //     // Save the Word if it's new
+  //     await isar.words.put(word);
+      
+  //     // Store the Word's ID in the Category
+  //     if (!words.contains(word.id)) {
+  //       words.add(word.id!);
+  //       await isar.categorys.put(this); // Update the Category
+  //     }
+  //   });
+  //   // print(words);
+  //   notifyListeners();
+    
+  // }
+
+  // void removeWord({required Isar isar, required Word word}) async {
+  //   await isar.writeTxn(() async {
+  //     words.remove(word.id);
+  //     await isar.categorys.put(this); // Save the updated Category
+  //   });
+  //   notifyListeners();
+  // }
 
   // // Remove a word by its id
   // void removeWordById(int id) {

@@ -41,9 +41,12 @@ class WordBankView extends StatelessWidget {
                   ),
                 );
 
-                if (addedWord != null) {
-                  category.upsertWord(isar: isar, word: addedWord);
+                if (addedWord == null || addedWord.wordName.isEmpty) {
+                  category.removeWord(isar: isar, word: newWord);
                   // print(category.loadWords(isar));
+                }
+                else {
+                  category.upsertWord(isar: isar, word: addedWord);
                 }
               },
               icon: const Icon(Icons.add, size: 36),
@@ -93,6 +96,9 @@ class WordBankView extends StatelessWidget {
                             category.upsertWord(isar: isar, word: updatedWord);
                             // print(category.loadWords(isar));
                           }
+                        },
+                        onLongPress: () {
+                          category.removeWord(isar: isar, word: word);
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -67,7 +67,7 @@ class AllCategoriesView extends StatelessWidget {
               child: const Text('2 min'),
             ),
             ElevatedButton(
-              onPressed: () => navigateGame(context: context, category: category, time: 10), //TODO 5 MINUTE TIMER HAS BEEN TEMPORARILY CHANGED TO MAKE TESTING FASTER
+              onPressed: () => navigateGame(context: context, category: category, time: 300), 
               child: const Text('5 min'),
             ),
           ],
@@ -102,7 +102,11 @@ class AllCategoriesView extends StatelessWidget {
         itemBuilder: (context, index) {
           final category = categories[index];
           return GestureDetector(
-            onTap: () => _showCategoryPopup(context, category),
+            onTap: () {
+              if(category.getWords(isar).isNotEmpty) {
+                _showCategoryPopup(context, category);
+                }
+              },
             onLongPress: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

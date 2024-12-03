@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:brainrot/models/collection.dart';
-import 'package:brainrot/utils/mocker.dart';
+// import 'package:brainrot/utils/mocker.dart';
 import 'package:brainrot/models/category.dart';
 import 'package:flutter/material.dart';
 
