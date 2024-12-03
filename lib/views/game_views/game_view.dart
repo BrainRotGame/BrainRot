@@ -18,7 +18,7 @@ class GameView extends StatefulWidget {
   final Isar isar;
   final Category category;
   final int time;
-  
+
 
   const GameView({super.key, required this.isar, required this.time, required this.category});
 
@@ -28,7 +28,7 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> {
   late Timer _gameTimer;
-  
+
 
   @override
   void initState() {
@@ -44,28 +44,28 @@ class _GameViewState extends State<GameView> {
     super.dispose();
   }
 
-@override
-// ensuring context and widget tree are available
-// in which they can be accessed
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  // called once we know that the context has been initialized
-  _sensorView();  // Start listening after context is available
-}
   void _sensorView() {
-      if (Platform.isAndroid || Platform.isIOS) {
-    accelerometerEvents.listen((AccelerometerEvent e) {
-      // ignore: use_build_context_synchronously
-      final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
-      // z -> axis representing front to back, x(left to right), y(top to bottom)
-      // 9.5 -> threshold set to detect movement with device (facing upward if +9.5, and downward -9.5)
-      // motion of sensor moving up, increment correct
-      if (e.z > 9.5) {
-        gameStateProvider.incrementCorrect();
-      } else if (e.z < -9.5) { // motion of sensor moving down, increment skip
-        gameStateProvider.incrementSkip();
-      }
-    });
+    if (Platform.isAndroid || Platform.isIOS) {
+      bool deviceFlipsUp = false; // user sets the device to face up
+      bool deviceFlipsDown = false; // user sets the device to face down
+      accelerometerEvents.listen((AccelerometerEvent e) {
+        // ignore: use_build_context_synchronously
+        final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
+        // z -> axis representing front to back, x(left to right), y(top to bottom)
+        // 9.5 -> threshold set to detect movement with device (facing upward if +9.5, and downward -9.5)
+        // motion of sensor moving up, increment correct
+        // ! the devices have yet to be flagged in order to prevent any repetition
+        // occuring
+        if (e.z > 9.5 && !deviceFlipsUp) {
+          deviceFlipsUp = true;
+          deviceFlipsDown = false;
+          gameStateProvider.incrementCorrect();
+        } else if (e.z < -9.5 && !deviceFlipsDown) { // motion of sensor moving down, increment skip
+          deviceFlipsDown = true;
+          deviceFlipsUp = false;
+          gameStateProvider.incrementSkip();
+        }
+      });
     }
   }
 
@@ -95,7 +95,7 @@ void didChangeDependencies() {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     Icon(Icons.arrow_upward_rounded),
-                    Text('Flip up or tap for guessing correctly'),
+                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     Icon(Icons.arrow_upward_rounded),
                   ],)
                 ),
@@ -106,7 +106,7 @@ void didChangeDependencies() {
                     children: [
                       Container(
                         width: 200,
-                        height: 65,
+                        height: 70,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(5),
@@ -114,9 +114,9 @@ void didChangeDependencies() {
                         ),
                         child: Column(
                           children: [
-                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}'),
-                            Text('Correct Guesses: ${gameStateProvider.correct}'),
-                            Text('Skipped: ${gameStateProvider.skipped}'),
+                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 15),),
+                            Text('Correct Guesses: ${gameStateProvider.correct}',  style: const TextStyle(fontSize: 15)),
+                            Text('Skipped: ${gameStateProvider.skipped}',  style: const TextStyle(fontSize: 15)),
                           ],
                         ),
                       ),
@@ -125,7 +125,7 @@ void didChangeDependencies() {
                       const Expanded(child: SizedBox()),
                       ElevatedButton(
                         onPressed: () => _navigateToDrawing(context),
-                        child: const Text("Navigate to drawing"),
+                        child: const Text("Navigate to drawing", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -136,7 +136,7 @@ void didChangeDependencies() {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     Icon(Icons.arrow_downward_rounded),
-                    Text('Flip down or tap for guessing correctly'),
+                    Text('Flip phone down or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                     Icon(Icons.arrow_downward_rounded),
                   ],)
                 ),
@@ -144,7 +144,7 @@ void didChangeDependencies() {
             ),
           ),
         );
-      } 
+      }
       // else {
       //   return const Scaffold(
       //     body: Padding(
@@ -206,7 +206,7 @@ void didChangeDependencies() {
     // await Future.delayed(const Duration(seconds: 1));
     final drawingProvider = Provider.of<DrawingProvider>(context, listen: false);
     drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
-    
+
     if (context.mounted) {
       // final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
@@ -217,7 +217,7 @@ void didChangeDependencies() {
           // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
     }
   }
-  
+
   void _restart() {
     // _gameTimer.cancel();
     final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);

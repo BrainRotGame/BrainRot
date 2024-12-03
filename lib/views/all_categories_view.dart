@@ -20,20 +20,28 @@ class AllCategoriesView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: controller,
-                decoration: const InputDecoration(labelText: 'Enter category name'),
+              Semantics(
+                label: 'Enter a new category name',
+                child: TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(labelText: 'Enter category name'),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  final categoryName = controller.text.trim();
-                  if (categoryName.isNotEmpty) {
-                    Provider.of<CollectionProvider>(context, listen: false)
-                        .addCategory(categoryName);
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: const Text('Save'),
+              Semantics(
+                button: true,
+                label: 'Save category',
+                hint: 'Saves the entered category name',
+                child: ElevatedButton(
+                  onPressed: () {
+                    final categoryName = controller.text.trim();
+                    if (categoryName.isNotEmpty) {
+                      Provider.of<CollectionProvider>(context, listen: false)
+                          .addCategory(categoryName);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text('Save'),
+                ),
               ),
             ],
           ),
@@ -50,25 +58,39 @@ class AllCategoriesView extends StatelessWidget {
           title: Text('You selected "${category.categoryName}"'),
           content: const Text('Pick a timer'),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+            Semantics(
+              button: true,
+              label: 'Cancel',
+              child: TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Cancel'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // implement here to jump to game view
-                // Navigator.of(context).pop();
-                navigateGame(context: context, category: category, time: 60);
-              },
-              child: const Text('1 min'),
+            Semantics(
+              button: true,
+              label: 'Start a 1-minute game',
+              child: ElevatedButton(
+                onPressed: () {
+                  navigateGame(context: context, category: category, time: 60);
+                },
+                child: const Text('1 min'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () => navigateGame(context: context, category: category, time: 120),
-              child: const Text('2 min'),
+            Semantics(
+              button: true,
+              label: 'Start a 2-minute game',
+              child: ElevatedButton(
+                onPressed: () => navigateGame(context: context, category: category, time: 120),
+                child: const Text('2 min'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () => navigateGame(context: context, category: category, time: 300), 
-              child: const Text('5 min'),
+            Semantics(
+              button: true,
+              label: 'Start a 5-minute game',
+              child: ElevatedButton(
+                onPressed: () => navigateGame(context: context, category: category, time: 10),
+                child: const Text('5 min'),
+              ),
             ),
           ],
         );
@@ -82,11 +104,17 @@ class AllCategoriesView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: const Text('Home View'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _showAddCategoryDialog(context),
+          Semantics(
+            button: true,
+            label: 'Add a new category',
+            child: IconButton(
+              tooltip: 'Add New Category',
+              icon: const Icon(Icons.add),
+              iconSize: 40,
+              onPressed: () => _showAddCategoryDialog(context),
+            ),
           ),
         ],
       ),
@@ -101,36 +129,47 @@ class AllCategoriesView extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
-          return GestureDetector(
-            onTap: () {
+          return Tooltip(
+            message: 'Tap to play game. Press and hold to edit category',
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  side: const BorderSide(color: Colors.black),
+                ),
+              ),
+              onPressed: () {
               if(category.getWords(isar).isNotEmpty) {
                 _showCategoryPopup(context, category);
                 }
               },
-            onLongPress: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => WordBankView(isar: isar, category: category),
-                ),
-              );
-            },
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
-              ),
+              onLongPress: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => WordBankView(isar: isar, category: category),
+                  ),
+                );
+              },
               child: Text(
-                category.categoryName,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
-              ),
+                  category.categoryName,
+                  style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              // Container(
+              //   alignment: Alignment.center,
+              //   decoration: BoxDecoration(
+              //     color: Colors.blue,
+              //     borderRadius: BorderRadius.circular(5),
+              //   ),
+                
+              // ),
             ),
           );
         },
       ),
     );
   }
-  
+
   void navigateGame({required BuildContext context, required Category category, required int time}) {
     Navigator.of(context).pop();
     Navigator.of(context).push(
@@ -138,9 +177,9 @@ class AllCategoriesView extends StatelessWidget {
         builder: (_) => GameView(
           isar: isar,
           category: category,
-          time: time
-        )
-      )
+          time: time,
+        ),
+      ),
     );
   }
 }

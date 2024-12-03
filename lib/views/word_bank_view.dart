@@ -18,7 +18,12 @@ class WordBankView extends StatelessWidget {
       value: category,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${category.categoryName} - Word Bank'),
+          title: Semantics(
+            header: true,
+            label: '${category.categoryName} - Word Bank',
+            excludeSemantics: false,
+            child: Text('${category.categoryName} - Word Bank'),
+          ),
           actions: [
             IconButton(
               onPressed: () async {
@@ -31,15 +36,15 @@ class WordBankView extends StatelessWidget {
                 );
                 category.upsertWord(isar: isar, word: newWord);
 
-                final addedWord = await Navigator.push<Word>(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreateWordView(
-                      word: newWord,
-                      category: category,
+                  final addedWord = await Navigator.push<Word>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateWordView(
+                        word: newWord,
+                        category: category,
+                      ),
                     ),
-                  ),
-                );
+                  );
 
                 if (addedWord == null || addedWord.wordName.isEmpty) {
                   category.removeWord(isar: isar, word: newWord);
@@ -74,51 +79,61 @@ class WordBankView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final word = allWords[index];
 
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            side: const BorderSide(color: Colors.black),
-                          ),
-                        ),
-                        onPressed: () async {
-                          final updatedWord = await Navigator.push<Word>(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateWordView(
-                                word: word,
-                                category: category,
+                      return Semantics(
+                        label: 'Word: ${word.wordName}',
+                        hint: word.hint != null && word.hint!.isNotEmpty
+                            ? 'Hint: ${word.hint!}'
+                            : 'No hint available',
+                        button: true,
+                        child: Tooltip(
+                          message: 'Edit Term',
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                side: const BorderSide(color: Colors.black),
                               ),
                             ),
-                          );
-
-                          if (updatedWord != null) {
-                            category.upsertWord(isar: isar, word: updatedWord);
+                            onPressed: () async {
+                              final updatedWord = await Navigator.push<Word>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CreateWordView(
+                                    word: word,
+                                    category: category,
+                                  ),
+                                ),
+                              );
+                          
+                              if (updatedWord != null) {
+                                category.upsertWord(isar: isar, word: updatedWord);
                             // print(category.loadWords(isar));
-                          }
-                        },
+                              }
+                            },
                         onLongPress: () {
                           category.removeWord(isar: isar, word: word);
                         },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              word.wordName,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 30, color: Colors.black),
-                            ),
-                            if (word.hint != null && word.hint!.isNotEmpty)
-                              Text(
-                                'Hint: ${word.hint!}',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.red,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  word.wordName,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 30, color: Colors.black),
                                 ),
-                              ),
-                          ],
+                                if (word.hint != null && word.hint!.isNotEmpty)
+                                  Text(
+                                    'Hint: ${word.hint!}',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     },

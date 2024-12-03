@@ -28,9 +28,9 @@ class DrawView extends StatelessWidget {
           home: Scaffold(
             appBar:
                 AppBar(title: const Text('Drawing Display'), actions: <Widget>[
-                  Semantics(label: 'Clear all button',excludeSemantics: true, child: IconButton(key: const Key('Clear'), iconSize: 30, onPressed: () => _clear(context), icon: const Icon(Icons.clear))),
-                  Semantics(label: 'Undo button',excludeSemantics: true, child: IconButton(key: const Key('Undo'), iconSize: 30, onPressed: () => _undo(context), icon: const Icon(Icons.undo))),
-                  Semantics(label: 'Redo button',excludeSemantics: true, child: IconButton(key: const Key('Redo'), iconSize: 30, onPressed: () => _redo(context), icon: const Icon(Icons.redo))),
+                  Semantics(label: 'Clear all button',excludeSemantics: true, child: IconButton(tooltip: 'Clear', key: const Key('Clear'), iconSize: 30, onPressed: () => _clear(context), icon: const Icon(Icons.clear))),
+                  Semantics(label: 'Undo button',excludeSemantics: true, child: IconButton(tooltip: 'Undo', key: const Key('Undo'), iconSize: 30, onPressed: () => _undo(context), icon: const Icon(Icons.undo))),
+                  Semantics(label: 'Redo button',excludeSemantics: true, child: IconButton(tooltip: 'Redo', key: const Key('Redo'), iconSize: 30, onPressed: () => _redo(context), icon: const Icon(Icons.redo))),
             ]),
             drawer: Drawer(
               child: Palette(context, key: const Key('Palette')),
@@ -44,16 +44,17 @@ class DrawView extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       width: 200,
-                      height: 65,
+                      height: 70,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(5),
                         color: const Color.fromARGB(255, 197, 235, 253),
                       ),
                       child: Column(children: [
-                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}'),
-                        Text('Correct Guesses: ${gameProvider.correct}'),
-                        Text('Skipped: ${gameProvider.skipped}'),],)),
+                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 15),),
+                        Text('Correct Guesses: ${gameProvider.correct}',  style: const TextStyle(fontSize: 15)),
+                        Text('Skipped: ${gameProvider.skipped}',  style: const TextStyle(fontSize: 15)),
+                      ],)),
                         // Text('Correct Guesses: ${gameProvider.time}'),
                         // Text('Correct Guesses: $correct'),
                         // Text('Skipped: $skipped'),],)),
@@ -79,6 +80,7 @@ class DrawView extends StatelessWidget {
                         label: 'toggle hint button',
                         excludeSemantics: true,
                         child: IconButton(
+                          iconSize: 30,
                           style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 192, 235, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
                           onPressed: () {
                             gameProvider.toggleHint();
