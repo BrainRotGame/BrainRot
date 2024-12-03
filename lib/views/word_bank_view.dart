@@ -17,32 +17,36 @@ class WordBankView extends StatelessWidget {
         appBar: AppBar(
           title: Text('${category.categoryName} - Word Bank'),
           actions: [
-            IconButton(
-              onPressed: () async {
-                // Create a new word with id = 0 for adding
-                final newWord = Word(
-                  id: 0, // Placeholder ID for new words
-                  wordName: '',
-                  description: '',
-                  hint: null,
-                );
-
-                final addedWord = await Navigator.push<Word>(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreateWordView(
-                      word: newWord,
-                      category: category,
+            Semantics(
+              label: 'Add word',
+              excludeSemantics: false,
+              child: IconButton(
+                onPressed: () async {
+                  // Create a new word with id = 0 for adding
+                  final newWord = Word(
+                    id: 0, // Placeholder ID for new words
+                    wordName: '',
+                    description: '',
+                    hint: null,
+                  );
+              
+                  final addedWord = await Navigator.push<Word>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateWordView(
+                        word: newWord,
+                        category: category,
+                      ),
                     ),
-                  ),
-                );
-
-                if (addedWord != null) {
-                  category.upsertCategory(addedWord);
-                }
-              },
-              icon: const Icon(Icons.add, size: 36),
-              tooltip: 'Add New Word',
+                  );
+              
+                  if (addedWord != null) {
+                    category.upsertCategory(addedWord);
+                  }
+                },
+                icon: const Icon(Icons.add, size: 36),
+                tooltip: 'Add New Word',
+              ),
             ),
           ],
         ),

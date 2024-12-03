@@ -82,9 +82,13 @@ class AllCategoriesView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Categories'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _showAddCategoryDialog(context),
+          Semantics(
+            label: 'Add Category',
+            excludeSemantics: false,
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => _showAddCategoryDialog(context),
+            ),
           ),
         ],
       ),
