@@ -88,7 +88,7 @@ class AllCategoriesView extends StatelessWidget {
               button: true,
               label: 'Start a 5-minute game',
               child: ElevatedButton(
-                onPressed: () => navigateGame(context: context, category: category, time: 10),
+                onPressed: () => navigateGame(context: context, category: category, time: 300),
                 child: const Text('5 min'),
               ),
             ),

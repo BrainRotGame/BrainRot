@@ -136,7 +136,7 @@ class _GameViewState extends State<GameView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     Icon(Icons.arrow_downward_rounded),
-                    Text('Flip phone down or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                    Text('Flip phone down or tap for skipping', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                     Icon(Icons.arrow_downward_rounded),
                   ],)
                 ),
