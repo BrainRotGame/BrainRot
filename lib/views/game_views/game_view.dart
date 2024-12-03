@@ -93,7 +93,7 @@ class _GameViewState extends State<GameView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     Icon(Icons.arrow_upward_rounded),
-                    Text('Flip up or tap for guessing correctly'),
+                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     Icon(Icons.arrow_upward_rounded),
                   ],)
                 ),
@@ -104,7 +104,7 @@ class _GameViewState extends State<GameView> {
                     children: [
                       Container(
                         width: 200,
-                        height: 65,
+                        height: 70,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(5),
@@ -112,9 +112,9 @@ class _GameViewState extends State<GameView> {
                         ),
                         child: Column(
                           children: [
-                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}'),
-                            Text('Correct Guesses: ${gameStateProvider.correct}'),
-                            Text('Skipped: ${gameStateProvider.skipped}'),
+                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 15),),
+                            Text('Correct Guesses: ${gameStateProvider.correct}',  style: const TextStyle(fontSize: 15)),
+                            Text('Skipped: ${gameStateProvider.skipped}',  style: const TextStyle(fontSize: 15)),
                           ],
                         ),
                       ),
@@ -123,7 +123,7 @@ class _GameViewState extends State<GameView> {
                       const Expanded(child: SizedBox()),
                       ElevatedButton(
                         onPressed: () => _navigateToDrawing(context),
-                        child: const Text("Navigate to drawing"),
+                        child: const Text("Navigate to drawing", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -134,7 +134,7 @@ class _GameViewState extends State<GameView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     Icon(Icons.arrow_downward_rounded),
-                    Text('Flip down or tap for guessing correctly'),
+                    Text('Flip phone down or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                     Icon(Icons.arrow_downward_rounded),
                   ],)
                 ),

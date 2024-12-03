@@ -80,7 +80,7 @@ class AllCategoriesView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: const Text('Home View'),
         actions: [
           Semantics(
             label: 'Add Category',
@@ -88,6 +88,7 @@ class AllCategoriesView extends StatelessWidget {
             child: IconButton(
               tooltip: 'Add New Category',
               icon: const Icon(Icons.add),
+              iconSize: 40,
               onPressed: () => _showAddCategoryDialog(context),
             ),
           ),
@@ -104,25 +105,36 @@ class AllCategoriesView extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
-          return GestureDetector(
-            onTap: () => _showCategoryPopup(context, category),
-            onLongPress: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => WordBankView(category: category),
+          return Tooltip(
+            message: 'Tap to play game. Press and hold to edit category',
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  side: const BorderSide(color: Colors.black),
                 ),
-              );
-            },
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
               ),
+              onPressed: () => _showCategoryPopup(context, category),
+              onLongPress: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => WordBankView(category: category),
+                  ),
+                );
+              },
               child: Text(
-                category.categoryName,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
-              ),
+                  category.categoryName,
+                  style: const TextStyle(color: Color.fromARGB(255, 215, 215, 215), fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              // Container(
+              //   alignment: Alignment.center,
+              //   decoration: BoxDecoration(
+              //     color: Colors.blue,
+              //     borderRadius: BorderRadius.circular(5),
+              //   ),
+                
+              // ),
             ),
           );
         },
