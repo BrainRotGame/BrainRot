@@ -3,11 +3,11 @@ import 'package:brainrot/models/word.dart';
 import 'package:brainrot/models/category.dart';
 
 class CreateWordView extends StatefulWidget {
-  final Word? word; // Existing word to edit (null for a new word)
+  final Word word; // Existing word to edit (null for a new word)
   final int? index; // Index of the word in the list
   final Category category; // The category this word belongs to
 
-  const CreateWordView({super.key, this.word, this.index, required this.category});
+  const CreateWordView({super.key, required this.word, this.index, required this.category});
 
   @override
   State<CreateWordView> createState() => _CreateWordViewState();
@@ -82,13 +82,14 @@ class _CreateWordViewState extends State<CreateWordView> {
   }
 
   /// Handles saving or updating the word and pops back to the previous screen.
-  void _saveAndPop(BuildContext context) {
-    final updatedWord = Word(
-      id: null,
-      wordName: currentWordName,
-      description: currentDescription,
-      hint: currentHint.isNotEmpty ? currentHint : null,
-    );
+  void _saveAndPop(BuildContext context) async {
+    final updatedWord = Word.withUpdatedData(original: widget.word, newWordName: currentWordName, newDescription: currentDescription, newHint: currentHint.isNotEmpty ? currentHint : null);
+    // final updatedWord = Word(
+    //   id: null,
+    //   wordName: currentWordName,
+    //   description: currentDescription,
+    //   hint: currentHint.isNotEmpty ? currentHint : null,
+    // );
 
     Navigator.pop(context, updatedWord);
   }

@@ -22,13 +22,14 @@ class WordBankView extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () async {
-                // Create a new word with id = 0 for adding
+                // Create a new word with new id for adding
                 final newWord = Word(
-                  id: null, // Placeholder ID for new words
+                  id: null,
                   wordName: '',
                   description: '',
                   hint: null,
                 );
+                category.upsertWord(isar: isar, word: newWord);
 
                 final addedWord = await Navigator.push<Word>(
                   context,
@@ -53,7 +54,7 @@ class WordBankView extends StatelessWidget {
         body: Consumer<Category>(
           builder: (context, category, _) {
             final allWords = category.getWords(isar);
-            print(allWords);
+            // print(allWords);
 
             return Column(
               children: [

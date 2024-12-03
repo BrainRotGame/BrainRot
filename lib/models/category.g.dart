@@ -79,6 +79,7 @@ Category _categoryDeserialize(
     categoryName: reader.readString(offsets[0]),
   );
   object.id = id;
+  object.words = reader.readLongList(offsets[2]) ?? [];
   return object;
 }
 

@@ -15,7 +15,7 @@ class Word {
 
   // constructor
   Word({
-    required this.id,
+    this.id,
     required this.wordName,
     required this.description,
     this.hint,

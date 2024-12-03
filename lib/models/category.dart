@@ -10,13 +10,13 @@ class Category extends ChangeNotifier {
   Id? id;
   final String categoryName;
   // final _category = IsarLinks<Word>();
-  final List<Id> words = [];
+  List<int> words;
   // final Isar _isar;
 
   // Constructor
   // Category({required this.categoryName, List<Word>? words})
   //     : _category = words ?? [];
-  Category({required this.categoryName});
+  Category({required this.categoryName}) : words = [];
 
   //Constructor creates a Category from a given name, isar, and list of entries
   //@param: takes in a name, isar, and list of entries
@@ -53,9 +53,10 @@ class Category extends ChangeNotifier {
   // }
 
   List<Word> getWords(Isar isar) {
-  // return isar.words.filter().anyOf(words, (q, id) => q.idEqualTo(id)).findAllSync();
-  return isar.words.where((word) => this.words.contains()).findAllSync();
-  // return isar.words.filter().id;
+    // final wordsLookup = words;
+    // List<Word> temp = 
+    return isar.words.filter().anyOf(words, (q, id) => q.idEqualTo(id)).findAllSync();
+    // return isar.words.where((words) => words.).findAllSync();
   } 
 
 
@@ -72,6 +73,7 @@ class Category extends ChangeNotifier {
       }
     });
     // print(words);
+    notifyListeners();
     
   }
 
