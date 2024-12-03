@@ -15,11 +15,16 @@ class WordBankView extends StatelessWidget {
       value: category,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${category.categoryName} - Word Bank'),
+          title: Semantics(
+            header: true,
+            label: '${category.categoryName} - Word Bank',
+            excludeSemantics: false,
+            child: Text('${category.categoryName} - Word Bank'),
+          ),
           actions: [
             Semantics(
-              label: 'Add word',
-              excludeSemantics: false,
+              label: 'Add a new word',
+              button: true,
               child: IconButton(
                 iconSize: 40,
                 onPressed: () async {
@@ -30,7 +35,7 @@ class WordBankView extends StatelessWidget {
                     description: '',
                     hint: null,
                   );
-              
+
                   final addedWord = await Navigator.push<Word>(
                     context,
                     MaterialPageRoute(
@@ -40,7 +45,7 @@ class WordBankView extends StatelessWidget {
                       ),
                     ),
                   );
-              
+
                   if (addedWord != null) {
                     category.upsertCategory(addedWord);
                   }
@@ -70,49 +75,56 @@ class WordBankView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final word = allWords[index];
 
-                      return Tooltip(
-                        message: 'Edit Term',
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              side: const BorderSide(color: Colors.black),
+                      return Semantics(
+                        label: 'Word: ${word.wordName}',
+                        hint: word.hint != null && word.hint!.isNotEmpty
+                            ? 'Hint: ${word.hint!}'
+                            : 'No hint available',
+                        button: true,
+                        child: Tooltip(
+                          message: 'Edit Term',
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                side: const BorderSide(color: Colors.black),
+                              ),
                             ),
-                          ),
-                          onPressed: () async {
-                            final updatedWord = await Navigator.push<Word>(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateWordView(
-                                  word: word,
-                                  category: category,
-                                ),
-                              ),
-                            );
-                        
-                            if (updatedWord != null) {
-                              category.upsertCategory(updatedWord);
-                            }
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                word.wordName,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 30, color: Colors.black),
-                              ),
-                              if (word.hint != null && word.hint!.isNotEmpty)
-                                Text(
-                                  'Hint: ${word.hint!}',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.red,
+                            onPressed: () async {
+                              final updatedWord = await Navigator.push<Word>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CreateWordView(
+                                    word: word,
+                                    category: category,
                                   ),
                                 ),
-                            ],
+                              );
+                          
+                              if (updatedWord != null) {
+                                category.upsertCategory(updatedWord);
+                              }
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  word.wordName,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 30, color: Colors.black),
+                                ),
+                                if (word.hint != null && word.hint!.isNotEmpty)
+                                  Text(
+                                    'Hint: ${word.hint!}',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                       );
