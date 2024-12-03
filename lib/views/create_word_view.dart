@@ -41,39 +41,52 @@ class _CreateWordViewState extends State<CreateWordView> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextFormField(
-              initialValue: currentWordName,
-              decoration: const InputDecoration(labelText: 'Word Name'),
-              onChanged: (value) {
-                setState(() {
-                  currentWordName = value;
-                });
-              },
+            Semantics(
+              label: 'Enter the word name',
+              child: TextFormField(
+                initialValue: currentWordName,
+                decoration: const InputDecoration(labelText: 'Word Name'),
+                onChanged: (value) {
+                  setState(() {
+                    currentWordName = value;
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              initialValue: currentDescription,
-              decoration: const InputDecoration(labelText: 'Description'),
-              onChanged: (value) {
-                setState(() {
-                  currentDescription = value;
-                });
-              },
+            Semantics(
+              label: 'Description Input Field',
+              child: TextFormField(
+                initialValue: currentDescription,
+                decoration: const InputDecoration(labelText: 'Description'),
+                onChanged: (value) {
+                  setState(() {
+                    currentDescription = value;
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              initialValue: currentHint,
-              decoration: const InputDecoration(labelText: 'Hint (Optional)'),
-              onChanged: (value) {
-                setState(() {
-                  currentHint = value;
-                });
-              },
+            Semantics(
+              label: 'enter hint',
+              child: TextFormField(
+                initialValue: currentHint,
+                decoration: const InputDecoration(labelText: 'Hint (Optional)'),
+                onChanged: (value) {
+                  setState(() {
+                    currentHint = value;
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () => _saveAndPop(context),
-              child: Text(isEditing ? 'Update Word' : 'Save Word'),
+            Semantics(
+              label: isEditing ? 'Update Word Button' : 'Save Word Button',
+              button: true,
+              child: ElevatedButton(
+                onPressed: () => _saveAndPop(context),
+                child: Text(isEditing ? 'Update Word' : 'Save Word'),
+              ),
             ),
           ],
         ),

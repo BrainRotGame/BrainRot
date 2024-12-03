@@ -18,20 +18,28 @@ class AllCategoriesView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: controller,
-                decoration: const InputDecoration(labelText: 'Enter category name'),
+              Semantics(
+                label: 'Enter a new category name',
+                child: TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(labelText: 'Enter category name'),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  final categoryName = controller.text.trim();
-                  if (categoryName.isNotEmpty) {
-                    Provider.of<CollectionProvider>(context, listen: false)
-                        .addCategory(categoryName);
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: const Text('Save'),
+              Semantics(
+                button: true,
+                label: 'Save category',
+                hint: 'Saves the entered category name',
+                child: ElevatedButton(
+                  onPressed: () {
+                    final categoryName = controller.text.trim();
+                    if (categoryName.isNotEmpty) {
+                      Provider.of<CollectionProvider>(context, listen: false)
+                          .addCategory(categoryName);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text('Save'),
+                ),
               ),
             ],
           ),
@@ -48,25 +56,39 @@ class AllCategoriesView extends StatelessWidget {
           title: Text('You selected "${category.categoryName}"'),
           content: const Text('Pick a timer'),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+            Semantics(
+              button: true,
+              label: 'Cancel',
+              child: TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Cancel'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // implement here to jump to game view
-                // Navigator.of(context).pop();
-                navigateGame(context: context, category: category, time: 60);
-              },
-              child: const Text('1 min'),
+            Semantics(
+              button: true,
+              label: 'Start a 1-minute game',
+              child: ElevatedButton(
+                onPressed: () {
+                  navigateGame(context: context, category: category, time: 60);
+                },
+                child: const Text('1 min'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () => navigateGame(context: context, category: category, time: 120),
-              child: const Text('2 min'),
+            Semantics(
+              button: true,
+              label: 'Start a 2-minute game',
+              child: ElevatedButton(
+                onPressed: () => navigateGame(context: context, category: category, time: 120),
+                child: const Text('2 min'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () => navigateGame(context: context, category: category, time: 10), //TODO 5 MINUTE TIMER HAS BEEN TEMPORARILY CHANGED TO MAKE TESTING FASTER
-              child: const Text('5 min'),
+            Semantics(
+              button: true,
+              label: 'Start a 5-minute game',
+              child: ElevatedButton(
+                onPressed: () => navigateGame(context: context, category: category, time: 10),
+                child: const Text('5 min'),
+              ),
             ),
           ],
         );
@@ -83,8 +105,8 @@ class AllCategoriesView extends StatelessWidget {
         title: const Text('Categories'),
         actions: [
           Semantics(
-            label: 'Add Category',
-            excludeSemantics: false,
+            button: true,
+            label: 'Add a new category',
             child: IconButton(
               tooltip: 'Add New Category',
               icon: const Icon(Icons.add),
@@ -113,15 +135,19 @@ class AllCategoriesView extends StatelessWidget {
                 ),
               );
             },
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                category.categoryName,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+            child: Semantics(
+              label: 'Category: ${category.categoryName}',
+              hint: 'Tap to start the game. Long press to view the word bank',
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  category.categoryName,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
             ),
           );
@@ -129,16 +155,16 @@ class AllCategoriesView extends StatelessWidget {
       ),
     );
   }
-  
+
   void navigateGame({required BuildContext context, required Category category, required int time}) {
     Navigator.of(context).pop();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => GameView(
           category: category,
-          time: time
-        )
-      )
+          time: time,
+        ),
+      ),
     );
   }
 }
