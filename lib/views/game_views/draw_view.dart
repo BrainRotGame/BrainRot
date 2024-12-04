@@ -49,16 +49,16 @@ class DrawView extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       width: 200,
-                      height: 70,
+                      height: 80,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(5),
                         color: const Color.fromARGB(255, 197, 235, 253),
                       ),
                       child: Column(children: [
-                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 15),),
-                        Text('Correct Guesses: ${gameProvider.correct}',  style: const TextStyle(fontSize: 15)),
-                        Text('Skipped: ${gameProvider.skipped}',  style: const TextStyle(fontSize: 15)),
+                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 18),),
+                        Text('Correct Guesses: ${gameProvider.correct}',  style: const TextStyle(fontSize: 18)),
+                        Text('Skipped: ${gameProvider.skipped}',  style: const TextStyle(fontSize: 18)),
                       ],)),
                         // Text('Correct Guesses: ${gameProvider.time}'),
                         // Text('Correct Guesses: $correct'),
@@ -74,7 +74,7 @@ class DrawView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromARGB(255, 192, 235, 255)
                       ),
-                      child: Text(wordHint)
+                      child: SizedBox(width: 650, child: Text(wordHint, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,))
                       ),
                   ),
                   Align(

@@ -50,50 +50,57 @@ class AllCategoriesView extends StatelessWidget {
     );
   }
 
-  void _showCategoryPopup(BuildContext context, Category category) {
+  void _showCategoryPopup(BuildContext context, Category category, bool error) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('You selected "${category.categoryName}"'),
-          content: const Text('Pick a timer'),
-          actions: [
-            Semantics(
-              button: true,
-              label: 'Cancel',
-              child: TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancel'),
-              ),
-            ),
-            Semantics(
-              button: true,
-              label: 'Start a 1-minute game',
-              child: ElevatedButton(
-                onPressed: () {
-                  navigateGame(context: context, category: category, time: 60);
-                },
-                child: const Text('1 min'),
-              ),
-            ),
-            Semantics(
-              button: true,
-              label: 'Start a 2-minute game',
-              child: ElevatedButton(
-                onPressed: () => navigateGame(context: context, category: category, time: 120),
-                child: const Text('2 min'),
-              ),
-            ),
-            Semantics(
-              button: true,
-              label: 'Start a 5-minute game',
-              child: ElevatedButton(
-                onPressed: () => navigateGame(context: context, category: category, time: 300),
-                child: const Text('5 min'),
-              ),
-            ),
-          ],
+        if(error) {
+          return const AlertDialog(
+          title: Text('Cannot play game - Category is empty. '),
         );
+        }
+        else {
+          return AlertDialog(
+            title: Text('You selected "${category.categoryName}"'),
+            content: const Text('Pick a timer'),
+            actions: [
+              Semantics(
+                button: true,
+                label: 'Cancel',
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Cancel'),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Start a 1-minute game',
+                child: ElevatedButton(
+                  onPressed: () {
+                    navigateGame(context: context, category: category, time: 60);
+                  },
+                  child: const Text('1 min'),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Start a 2-minute game',
+                child: ElevatedButton(
+                  onPressed: () => navigateGame(context: context, category: category, time: 120),
+                  child: const Text('2 min'),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Start a 5-minute game',
+                child: ElevatedButton(
+                  onPressed: () => navigateGame(context: context, category: category, time: 300),
+                  child: const Text('5 min'),
+                ),
+              ),
+            ],
+          );
+        }
       },
     );
   }
@@ -124,7 +131,7 @@ class AllCategoriesView extends StatelessWidget {
             child: IconButton(
               tooltip: 'Help',
               icon: const Icon(Icons.question_mark),
-              iconSize: 40,
+              iconSize: 25,
               onPressed: () => _showHelp(context),
             ),
           ),
@@ -154,8 +161,11 @@ class AllCategoriesView extends StatelessWidget {
               ),
               onPressed: () {
               if(category.getWords(isar).isNotEmpty) {
-                _showCategoryPopup(context, category);
+                _showCategoryPopup(context, category, false);
                 }
+              else {
+                _showCategoryPopup(context, category, true);
+              }
               },
               onLongPress: () {
                 Navigator.of(context).push(
@@ -198,6 +208,8 @@ class AllCategoriesView extends StatelessWidget {
     );
   }
   
+  //method will display a Dialog box of a help menu
+  //@param: takes in a BuildContext
   _showHelp(BuildContext context) {
     showDialog(
       context: context,

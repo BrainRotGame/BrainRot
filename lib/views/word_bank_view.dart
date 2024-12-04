@@ -25,38 +25,53 @@ class WordBankView extends StatelessWidget {
             child: Text('${category.categoryName} - Word Bank'),
           ),
           actions: [
-            IconButton(
-              onPressed: () async {
-                // Create a new word with new id for adding
-                final newWord = Word(
-                  id: null,
-                  wordName: '',
-                  description: '',
-                  hint: null,
-                );
-                category.upsertWord(isar: isar, word: newWord);
-
-                  final addedWord = await Navigator.push<Word>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateWordView(
-                        word: newWord,
-                        category: category,
-                      ),
-                    ),
+            Semantics(
+              label: 'Add word button',
+              excludeSemantics: true,
+              button: true,
+              child: IconButton(
+                onPressed: () async {
+                  // Create a new word with new id for adding
+                  final newWord = Word(
+                    id: null,
+                    wordName: '',
+                    description: '',
+                    hint: null,
                   );
-
-                if (addedWord == null || addedWord.wordName.isEmpty) {
-                  category.removeWord(isar: isar, word: newWord);
-                  // print(category.loadWords(isar));
-                }
-                else {
-                  category.upsertWord(isar: isar, word: addedWord);
-                }
-              },
-              icon: const Icon(Icons.add, size: 36),
-              tooltip: 'Add New Word',
+                  category.upsertWord(isar: isar, word: newWord);
+                    final addedWord = await Navigator.push<Word>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateWordView(
+                          word: newWord,
+                          category: category,
+                        ),
+                      ),
+                    );
+              
+                  if (addedWord == null || addedWord.wordName.isEmpty) {
+                    category.removeWord(isar: isar, word: newWord);
+                    // print(category.loadWords(isar));
+                  }
+                  else {
+                    category.upsertWord(isar: isar, word: addedWord);
+                  }
+                },
+                icon: const Icon(Icons.add, size: 36),
+                tooltip: 'Add New Word',
+              ),
             ),
+            Semantics(
+            button: true,
+            label: 'Help button',
+            excludeSemantics: true,
+            child: IconButton(
+              tooltip: 'Help',
+              icon: const Icon(Icons.question_mark),
+              iconSize: 25,
+              onPressed: () => _showHelp(context),
+            ),
+          ),
           ],
         ),
         body: Consumer<Category>(
@@ -146,6 +161,29 @@ class WordBankView extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+  
+    //method will display a Dialog box of a help menu
+  //@param: takes in a BuildContext
+  _showHelp(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          title: Text('Help Info'),
+          content: Align(
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap the + button to add a new Word with a description and hint.'))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap a word to edit it.'))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap & hold a word to delete it.'))),
+                
+              ],
+            ),
+          )
+        );
+      },
     );
   }
 }

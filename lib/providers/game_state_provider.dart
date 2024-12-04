@@ -53,7 +53,7 @@ class GameStateProvider extends ChangeNotifier{
   }
 
   //Method will refresh the game state, setting all counters to 0 and setting the game state to being played
-  void refreshGameState({required Category category, required int newTime, required Isar isar}) {
+  void refreshGameState({required Category category, required int newTime, required Isar isar, required bool notify}) {
     correct = 0;
     skipped = 0;
     // clears list of words
@@ -65,7 +65,10 @@ class GameStateProvider extends ChangeNotifier{
     words = temp;
 
     time = newTime;
-    notifyListeners();
+    if(notify) {
+      notifyListeners();
+    }
+    
   }
 
   //Method will switch to a new term

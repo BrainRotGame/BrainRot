@@ -101,7 +101,7 @@ class _CreateWordViewState extends State<CreateWordView> {
   /// Handles saving or updating the word and pops back to the previous screen.
   void _saveAndPop(BuildContext context) async {
     if(currentWordName.trim().isNotEmpty && currentDescription.trim().isNotEmpty) {
-      final updatedWord = Word.withUpdatedData(original: widget.word, newWordName: currentWordName, newDescription: currentDescription, newHint: currentHint);
+      final updatedWord = Word.withUpdatedData(original: widget.word, newWordName: currentWordName.trim(), newDescription: currentDescription.trim(), newHint: currentHint.trim());
       // final updatedWord = Word(
       //   id: null,
       //   wordName: currentWordName,
