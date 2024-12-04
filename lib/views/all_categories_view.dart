@@ -104,11 +104,12 @@ class AllCategoriesView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home View'),
+        title: const Text('Brain Rot', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),),
         actions: [
           Semantics(
             button: true,
             label: 'Add a new category',
+            excludeSemantics: true,
             child: IconButton(
               tooltip: 'Add New Category',
               icon: const Icon(Icons.add),
@@ -116,21 +117,33 @@ class AllCategoriesView extends StatelessWidget {
               onPressed: () => _showAddCategoryDialog(context),
             ),
           ),
+          Semantics(
+            button: true,
+            label: 'Help button',
+            excludeSemantics: true,
+            child: IconButton(
+              tooltip: 'Help',
+              icon: const Icon(Icons.question_mark),
+              iconSize: 40,
+              onPressed: () => _showHelp(context),
+            ),
+          ),
+          
         ],
       ),
       body: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 4,
           childAspectRatio: 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final category = categories[index];
           return Tooltip(
-            message: 'Tap to play game. Press and hold to edit category',
+            message: 'Tap to play game. Press & hold to edit category',
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlue,
@@ -180,6 +193,26 @@ class AllCategoriesView extends StatelessWidget {
           time: time,
         ),
       ),
+    );
+  }
+  
+  _showHelp(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          title: Text('Help Info'),
+          content: Align(
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap the + button to add a new category.'))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap & hold a category to edit their word bank.'))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap a category to play a game.'))),
+              ],
+            ),
+          )
+        );
+      },
     );
   }
 }

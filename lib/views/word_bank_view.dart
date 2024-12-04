@@ -86,7 +86,7 @@ class WordBankView extends StatelessWidget {
                             : 'No hint available',
                         button: true,
                         child: Tooltip(
-                          message: 'Edit Term',
+                          message: 'Tap to edit term. Tap & hold to delete term',
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
