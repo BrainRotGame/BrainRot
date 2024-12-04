@@ -88,6 +88,7 @@ class _GameViewState extends State<GameView> {
     }
   }
 
+
   @override
   // Builds the widget's UI in order to display the main view of the game state
     // context: passed in to provide access to other widgets
@@ -167,6 +168,89 @@ class _GameViewState extends State<GameView> {
             ),
           );
         }
+ Widget build(BuildContext context) {
+  return Consumer<GameStateProvider>(
+    builder: (context, gameStateProvider, child) {
+      // Call the game finished dialog if the game is complete
+      if (gameStateProvider.finished) {
+        _gameTimer.cancel();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _gameFinished(context, gameStateProvider);
+        });
+      }
+
+      // Render UI based on whether the game is finished
+      if (!gameStateProvider.finished) {
+        return Scaffold(
+          backgroundColor: Colors.lightBlue[100],
+          body: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () => gameStateProvider.incrementCorrect(),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Icon(Icons.arrow_upward_rounded),
+                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Icon(Icons.arrow_upward_rounded),
+                  ],)
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 200,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 15),),
+                            Text('Correct Guesses: ${gameStateProvider.correct}',  style: const TextStyle(fontSize: 15)),
+                            Text('Skipped: ${gameStateProvider.skipped}',  style: const TextStyle(fontSize: 15)),
+                          ],
+                        ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+                      const Expanded(child: SizedBox()),
+                      ElevatedButton(
+                        onPressed: () => _navigateToDrawing(context),
+                        child: const Text("Navigate to drawing", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () => gameStateProvider.incrementSkip(),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Icon(Icons.arrow_downward_rounded),
+                    Text('Flip phone down or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                    Icon(Icons.arrow_downward_rounded),
+                  ],)
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      // else {
+      //   return const Scaffold(
+      //     body: Padding(
+      //       padding: EdgeInsets.all(20.0),
+      //       child: Text('FINISHED'),
+      //     ),
+      //   );
+      // }
       return const SizedBox.shrink();
     },
   );
