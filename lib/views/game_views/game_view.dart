@@ -1,12 +1,8 @@
-// import 'dart:math';
-
 import 'dart:async';
 
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:brainrot/providers/game_state_provider.dart';
-// import 'package:brainrot/utils/mocker.dart';
-// import 'package:brainrot/views/all_categories_view.dart';
 import 'package:brainrot/views/game_views/draw_view.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
@@ -14,23 +10,32 @@ import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:io';
 
+// Class created to display the GameView widget
 class GameView extends StatefulWidget {
+  // category of words users will use in order to guess in the game
   final Isar isar;
   final Category category;
+  // time defined to display a countdown while the user is playing the game
   final int time;
 
 
   const GameView({super.key, required this.isar, required this.time, required this.category});
 
   @override
+  // creating a state for the widget of GameView
   State<GameView> createState() => _GameViewState();
 }
 
+// Class created for the UI of the gameview in order to display
+// updates containing the timer and sensor view
 class _GameViewState extends State<GameView> {
+  // tracks time to ensure user is displayed a countdown timer
   late Timer _gameTimer;
 
 
   @override
+  // method created to initialize the sensor view and gameview when the widget
+  // is initially created
   void initState() {
     super.initState();
     _sensorView();
@@ -39,11 +44,24 @@ class _GameViewState extends State<GameView> {
   }
 
   @override
+  // created to ensure the widget is cleaned up/disposed and removed from the
+  // widget tree and cancels the timer for the game
   void dispose() {
     _gameTimer.cancel();
     super.dispose();
   }
 
+// @override
+// // ensuring context and widget tree are available
+// // in which they can be accessed
+// void didChangeDependencies() {
+//   super.didChangeDependencies();
+//   // called once we know that the context has been initialized
+//   _sensorView();  // Start listening after context is available
+// }
+
+  // Method created in order to determine the detection of the
+  // change in orientation the user makes with their device
   void _sensorView() {
     if (Platform.isAndroid || Platform.isIOS) {
       bool deviceFlipsUp = false; // user sets the device to face up
@@ -54,7 +72,7 @@ class _GameViewState extends State<GameView> {
         // z -> axis representing front to back, x(left to right), y(top to bottom)
         // 9.5 -> threshold set to detect movement with device (facing upward if +9.5, and downward -9.5)
         // motion of sensor moving up, increment correct
-        // ! the devices have yet to be flagged in order to prevent any repetition
+        // the devices have yet to be flagged in order to prevent any repetition
         // occuring
         if (e.z > 9.5 && !deviceFlipsUp) {
           deviceFlipsUp = true;
@@ -70,16 +88,19 @@ class _GameViewState extends State<GameView> {
   }
 
   @override
- Widget build(BuildContext context) {
-  return Consumer<GameStateProvider>(
-    builder: (context, gameStateProvider, child) {
-      // Call the game finished dialog if the game is complete
-      if (gameStateProvider.finished) {
-        _gameTimer.cancel();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _gameFinished(context, gameStateProvider);
-        });
-      }
+  // Builds the widget's UI in order to display the main view of the game state
+  // Parameters:
+    // context: passed in to provide access to other widgets
+  Widget build(BuildContext context) {
+    return Consumer<GameStateProvider>(
+      builder: (context, gameStateProvider, child) {
+        // Call the game finished dialog if the game is complete
+        if (gameStateProvider.finished) {
+          _gameTimer.cancel();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _gameFinished(context, gameStateProvider);
+          });
+        }
 
       // Render UI based on whether the game is finished
       if (!gameStateProvider.finished) {
@@ -160,11 +181,10 @@ class _GameViewState extends State<GameView> {
 
   // method created to display a dialog box in order
   // for the user to see the summary of the game they played
+  // Parameters:
+    // context: passed in to provide access to other widgets
+    // gameStateProvider: provides state of the game
   _gameFinished(BuildContext context, GameStateProvider gameStateProvider) {
-    // if(_currDrawing) {
-    //   _currDrawing = false;
-    //   Navigator.pop(context);
-    // }
     if (gameStateProvider.finished) {
       showDialog(
         context: context,
@@ -202,31 +222,31 @@ class _GameViewState extends State<GameView> {
     }
   }
 
+  // Method created to navigate user's to the drawing canvas page
+  // and clears the canvas once a new term is set
+  // Parameters:
+    // context: passed in to provide access to other widgets
   _navigateToDrawing(BuildContext context) {
-    // await Future.delayed(const Duration(seconds: 1));
     final drawingProvider = Provider.of<DrawingProvider>(context, listen: false);
     drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
-
     if (context.mounted) {
-      // final gameStateProvider = Provider.of<GameStateProvider>(context, listen:false);
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const DrawView(width: 800, height: 400))
-          );
-          // builder: (context) => DrawView(width: 800, height: 400, correct: gameStateProvider.correct, skipped: gameStateProvider.skipped)));
+      );
     }
   }
 
+  // Method created in order to restart the game by ensuring the game state
+  // is reset
   void _restart() {
-    // _gameTimer.cancel();
     final gameStateProvider = Provider.of<GameStateProvider>(context, listen: false);
     // print(widget.time);
     gameStateProvider.refreshGameState(category: widget.category, newTime: widget.time, isar: widget.isar);
     
     _gameTimer = Timer.periodic(const Duration(seconds: 1), (Timer time) {
-      // print('test');
-      gameStateProvider.decrementTimer();
+    gameStateProvider.decrementTimer();
     });
   }
 }
