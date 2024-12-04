@@ -73,15 +73,86 @@ Collection gameMocker() {
     ),
   ];
 
+  final holidayWords = [
+    Word(
+      id: 11,
+      wordName: "Halloween",
+      description: "Holiday known to dress up as something else",
+      hint: "You might be scared of this holiday.",
+    ),
+    Word(
+      id: 12,
+      wordName: "New Years",
+      description: "Celebration for the start of a new year",
+      hint: "Midnight Countdown",
+    ),
+    Word(
+      id: 13,
+      wordName: "Christmas",
+      description: "Celebration with the implementation of gift-giving and trees",
+      hint: "Santa brings gifts.",
+    ),
+  ];
+
+  final sportsWords = [
+    Word(
+      id: 14,
+      wordName: "Soccer",
+      description: "Popular sport against two teams kicking a ball into the goal",
+      hint: "It's called something else outside of the U.S.",
+    ),
+    Word(
+      id: 15,
+      wordName: "Football",
+      description: "Played by catching the ball with your hands as you score by crossing the opponent's field line",
+      hint: "It's an oval ball",
+    ),
+    Word(
+      id: 16,
+      wordName: "Swimming",
+      description: "A sport played to race in the water ",
+      hint: "Involves water.",
+    ),
+  ];
+
+  final hobbyWords = [
+    Word(
+      id: 17,
+      wordName: "Drawing",
+      description: "Use of pencils and other tools to create and display an image",
+      hint: "What would you do with a blank paper and tools.",
+    ),
+    Word(
+      id: 18,
+      wordName: "Playing a musical instrument",
+      description: "Use of an instrument to create different, unique sounds",
+      hint: "Making melodies, different tones and sounds",
+    ),
+    Word(
+      id: 19,
+      wordName: "Knitting",
+      description: "Use of yarn to create a variety of clothing items and more",
+      hint: "Gives you something warm to wear.",
+    ),
+  ];
+
   final animalsCategory = Category(categoryName: "Animals", words: animalsWords);
   final fruitsCategory = Category(categoryName: "Fruits", words: fruitsWords);
   final countriesCategory = Category(categoryName: "Countries", words: countriesWords);
+  final holidayCategory = Category(categoryName: "Holidays", words: holidayWords);
+  final sportsCategory = Category(categoryName: "Sports", words: sportsWords);
+  final hobbyCategory = Category(categoryName: "Hobbies", words: hobbyWords);
 
   final gameCollection = Collection();
 
   gameCollection.upsertCategory(animalsCategory);
   gameCollection.upsertCategory(fruitsCategory);
   gameCollection.upsertCategory(countriesCategory);
+  gameCollection.upsertCategory(holidayCategory);
+  gameCollection.upsertCategory(sportsCategory);
+  gameCollection.upsertCategory(hobbyCategory);
+
+
 
   return gameCollection;
 }

@@ -95,7 +95,7 @@ class DrawingProvider extends ChangeNotifier {
       futureActions.clear();
       _invalidateAndNotify();
     }
-    
+
   }
 
   //Method will 'undo' a drawing action if there is an available drawing state to undo to
@@ -126,7 +126,7 @@ class DrawingProvider extends ChangeNotifier {
     add(ClearAction());
     // print(pastActions);
   }
-  
+
   //Method will completely wipe all drawing data from pastActions and futureActions
   void wipeDrawing() {
     _pastActions.removeRange(0, _pastActions.length);

@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 //Provider will maintain score and time of the current game
 class GameStateProvider extends ChangeNotifier{
 
-  // final Collection _collectionView;
-  // final List<Word> _firstListWords;
   int time;
   int correct;
   int skipped;
@@ -18,7 +16,7 @@ class GameStateProvider extends ChangeNotifier{
   bool hint;
 
   GameStateProvider()
-  : 
+  :
   time = 0,
   correct = 0,
   skipped = 0,
@@ -26,8 +24,10 @@ class GameStateProvider extends ChangeNotifier{
   guessedWords = [],
   finished = false,
   hint = false;
-  // _firstListWords = List.from(words);
 
+  // updated the time with a new value of time
+  // Parameters:
+    // newTime: new time set for the game
   void setTime(int newTime) {
     time = newTime;
   }
@@ -64,17 +64,6 @@ class GameStateProvider extends ChangeNotifier{
     words = temp;
 
     time = newTime;
-
-
-    
-    //allows for game to reset with new set of words
-    // if (newWords != null) {
-    //   words = List.from(newWords);
-    //   _firstListWords.clear();
-    //   _firstListWords.addAll(newWords);
-    // } else {
-    //   words = List.from(_firstListWords);
-    // }
     notifyListeners();
   }
 
@@ -86,8 +75,6 @@ class GameStateProvider extends ChangeNotifier{
     // if the list of words are empty we want to ensure that the words are shuffled
     if(words.isEmpty) {
       finished = true;
-      // words = List.from(_firstListWords);
-      // words.shuffle(Random());
     }
     notifyListeners();
   }
@@ -102,6 +89,8 @@ class GameStateProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  // method created to update the UI and display a hint to the user
+  // if asked
   void toggleHint() {
     hint = !hint;
     notifyListeners();
