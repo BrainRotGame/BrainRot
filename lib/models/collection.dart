@@ -28,10 +28,11 @@ class CategoryCollection {
       // Add new category
       _collection.add(category);
       //print('Added category "${category.categoryName}".');
+      await _isar.writeTxn(() async {
+        await _isar.categorys.put(category);
+      });
     }
-    await _isar.writeTxn(() async {
-      await _isar.categorys.put(category);
-    });
+    
     
   }
 
