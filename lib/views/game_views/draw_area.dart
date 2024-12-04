@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'drawing_painter.dart';
 
-//Object represents a drawing area for a Drawing app
+//Object represents a drawing area
 //Object will read tap/mouse inputs, and display the drawing the user's creating
 class DrawArea extends StatelessWidget {
   const DrawArea({super.key, required this.width, required this.height});

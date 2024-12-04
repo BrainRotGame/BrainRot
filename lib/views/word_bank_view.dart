@@ -82,7 +82,7 @@ class WordBankView extends StatelessWidget {
                       return Semantics(
                         label: 'Word: ${word.wordName}',
                         hint: word.hint != null && word.hint!.isNotEmpty
-                            ? 'Hint: ${word.hint!}'
+                            ? 'Hint: ${word.hint}'
                             : 'No hint available',
                         button: true,
                         child: Tooltip(
@@ -110,9 +110,9 @@ class WordBankView extends StatelessWidget {
                             // print(category.loadWords(isar));
                               }
                             },
-                        onLongPress: () {
-                          category.removeWord(isar: isar, word: word);
-                        },
+                            onLongPress: () {
+                              category.removeWord(isar: isar, word: word);
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -120,6 +120,7 @@ class WordBankView extends StatelessWidget {
                                   word.wordName,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(fontSize: 30, color: Colors.black),
+                                  overflow: TextOverflow.ellipsis
                                 ),
                                 if (word.hint != null && word.hint!.isNotEmpty)
                                   Text(
@@ -129,6 +130,7 @@ class WordBankView extends StatelessWidget {
                                       fontSize: 20,
                                       fontStyle: FontStyle.italic,
                                       color: Colors.red,
+                                      overflow: TextOverflow.ellipsis
                                     ),
                                   ),
                               ],

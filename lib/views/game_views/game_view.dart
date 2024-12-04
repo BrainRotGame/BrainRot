@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:io';
 
-// Class created to display the GameView widget
+//Class created to display the GameView widget
+//Gameview will allow users to play a game with a particular category
 class GameView extends StatefulWidget {
   // category of words users will use in order to guess in the game
   final Isar isar;
@@ -218,7 +219,7 @@ class _GameViewState extends State<GameView> {
                   Navigator.of(context).pop();
                   _restart();
                 },
-                child: const Text('Restart Game', textAlign: TextAlign.center,),
+                child: const FittedBox(child: Text('Restart Game', textAlign: TextAlign.center,)),
               ),
               TextButton(
                 onPressed: () {
@@ -247,7 +248,7 @@ class _GameViewState extends State<GameView> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const DrawView(width: 800, height: 400))
+          builder: (context) => const DrawView())
       );
     }
   }

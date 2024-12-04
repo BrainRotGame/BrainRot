@@ -5,6 +5,8 @@ import 'package:isar/isar.dart';
 
 part 'category.g.dart';
 
+//Object represents a Category collection
+//Categories can be customized to have a name and users can add words associated to it
 @collection
 class Category extends ChangeNotifier {
   Id? id;
@@ -13,56 +15,18 @@ class Category extends ChangeNotifier {
   IsarLinks<Word> words = IsarLinks<Word>();
   // final Isar _isar;
 
-  // Constructor
-  // Category({required this.categoryName, List<Word>? words})
-  //     : _category = words ?? [];
   Category({required this.categoryName});
 
-  //Constructor creates a Category from a given name, isar, and list of entries
-  //@param: takes in a name, isar, and list of entries
-  // Category.recreate({required this.categoryName, required IsarLinks<Word> category}) {
-  //   _category.addAll(category);
-  // }
-  // _entries = List.from(entries),
-  
-  // _isar = isar;
-
-  // Getter method for the list of words
-  // @ignore
-  // List<Word> get category => List.unmodifiable(_category);
-
-  // Add or update a word in the category
-  // void upsertCategory(Word word) {
-
-  //   // Find the index of the word with the same id
-  //   final index = _category.indexWhere((w) => w.id == word.id);
-
-  //   if (index != -1) {
-  //     // Update the existing word
-  //     _category[index] = word;
-  //   } else {
-  //     // Add a new word
-  //     _category.add(word);
-  //   }
-  //   // notifyListeners();
-  // }
-
-  // Future<List<Word>> loadWords(Isar isar) async {
-  //   await _category.load();
-  //   return _category.toList();
-  // }
-
-  // List<Word> getWords(Isar isar) {
-  //   // final wordsLookup = words;
-  //   // List<Word> temp = 
-  //   return isar.words.filter().anyOf(words, (q, id) => q.idEqualTo(id)).findAllSync();
-  //   // return isar.words.where((words) => words.).findAllSync();
-  // } 
+  //Method will get all words within the category as a list
+  //@param: takes in an Isar to extract the words
   List<Word> getWords(Isar isar) {
     words.loadSync(); // Ensure links are loaded
     return words.toList();
   }
 
+  //Method will add/update a word within the category
+  //If the word already exists within the category, it'll be updated, otherwise the word will be added into the category
+  //@param: takes in Isar to update, and the word that's being upserted into the category
   void upsertWord({required Isar isar, required Word word}) {
     isar.writeTxnSync(() {
       isar.words.putSync(word); // Save the word synchronously
@@ -73,6 +37,8 @@ class Category extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Method will remove a word within the category
+  //@param: Takes in a Isar to remove from, and a word that's being removed
   void removeWord({required Isar isar, required Word word}) {
     isar.writeTxnSync(() {
       isar.words.deleteSync(word.id!);
@@ -83,49 +49,4 @@ class Category extends ChangeNotifier {
   notifyListeners();
 }
 
-  // void upsertWord({required Isar isar, required Word word}) async{
-  //   // print('word ID: ${word.id}');
-  //   await isar.writeTxn(() async {
-  //     // Save the Word if it's new
-  //     await isar.words.put(word);
-      
-  //     // Store the Word's ID in the Category
-  //     if (!words.contains(word.id)) {
-  //       words.add(word.id!);
-  //       await isar.categorys.put(this); // Update the Category
-  //     }
-  //   });
-  //   // print(words);
-  //   notifyListeners();
-    
-  // }
-
-  // void removeWord({required Isar isar, required Word word}) async {
-  //   await isar.writeTxn(() async {
-  //     words.remove(word.id);
-  //     await isar.categorys.put(this); // Save the updated Category
-  //   });
-  //   notifyListeners();
-  // }
-
-  // // Remove a word by its id
-  // void removeWordById(int id) {
-  //   _category.removeWhere((w) => w.id == id); // Remove the word with the given ID
-  //   notifyListeners(); // Notify listeners that the list has changed
-  // }
-
-
-  // // Helper method to check if a word with a specific id exists
-  // bool isWordExistsById(int id) {
-  //   return _category.any((word) => word.id == id);
-  // }
-
-  // Helper method to clone the category
-  // Category clone() {
-  //   // return Category(
-  //   //   categoryName: categoryName,
-  //   //   words: List.from(_category),
-  //   // );
-  //   return Category.recreate(categoryName: categoryName, category: _category);
-  // }
 }

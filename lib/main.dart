@@ -1,6 +1,6 @@
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/models/word.dart';
-import 'package:brainrot/providers/word_bank_provider.dart';
+// import 'package:brainrot/providers/word_bank_provider.dart';
 import 'package:brainrot/providers/game_state_provider.dart';
 import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CollectionProvider(isar: isar)),
-        ChangeNotifierProvider(create: (_) => WordBankProvider()),
+        // ChangeNotifierProvider(create: (_) => WordBankProvider()),
         ChangeNotifierProvider(create: (_) => GameStateProvider()),
         ChangeNotifierProvider(create: (_) => DrawingProvider(width: 800, height: 400)),
       ],

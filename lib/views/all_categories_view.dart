@@ -164,10 +164,12 @@ class AllCategoriesView extends StatelessWidget {
                   ),
                 );
               },
-              child: Text(
-                  category.categoryName,
-                  style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-                ),
+              child: FittedBox(
+                child: Text(
+                    category.categoryName,
+                    style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+              ),
               // Container(
               //   alignment: Alignment.center,
               //   decoration: BoxDecoration(

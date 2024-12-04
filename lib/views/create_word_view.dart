@@ -91,7 +91,7 @@ class _CreateWordViewState extends State<CreateWordView> {
               ),
             ),
             if(error)
-            const Padding(padding: EdgeInsets.all(5),child: Text('Cannot update term without a name'))
+            const Padding(padding: EdgeInsets.all(5),child: Text('Cannot update term without a name or description'))
           ],
         ),
       ),
@@ -100,7 +100,7 @@ class _CreateWordViewState extends State<CreateWordView> {
 
   /// Handles saving or updating the word and pops back to the previous screen.
   void _saveAndPop(BuildContext context) async {
-    if(currentWordName.isNotEmpty) {
+    if(currentWordName.trim().isNotEmpty && currentDescription.trim().isNotEmpty) {
       final updatedWord = Word.withUpdatedData(original: widget.word, newWordName: currentWordName, newDescription: currentDescription, newHint: currentHint);
       // final updatedWord = Word(
       //   id: null,

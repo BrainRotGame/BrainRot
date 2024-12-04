@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brainrot/models/word.dart';
 
+
 class WordBankProvider extends ChangeNotifier {
   final List<Word> _words = [];
 
