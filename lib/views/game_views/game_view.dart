@@ -115,9 +115,9 @@ class _GameViewState extends State<GameView> {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Icon(Icons.arrow_upward_rounded),
-                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    Icon(Icons.arrow_upward_rounded),
+                    Icon(Icons.arrow_upward_rounded, color: Color.fromARGB(255, 52, 112, 54),),
+                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 52, 112, 54))),
+                    Icon(Icons.arrow_upward_rounded, color: Color.fromARGB(255, 52, 112, 54),),
                   ],)
                 ),
                 Expanded(
@@ -146,20 +146,34 @@ class _GameViewState extends State<GameView> {
                       const Expanded(child: SizedBox()),
                       ElevatedButton(
                         onPressed: () => _navigateToDrawing(context),
-                        child: const Text("Navigate to drawing", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        child: const Text("Navigate to drawing", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
                       ),
                     ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () => gameStateProvider.incrementSkip(),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                    Icon(Icons.arrow_downward_rounded),
-                    Text('Flip phone down or tap for skipping', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                    Icon(Icons.arrow_downward_rounded),
-                  ],)
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: IconButton(
+                        onPressed: () {Navigator.pop(context); }, 
+                        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 255, 255, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
+                        icon: const Icon(Icons.clear, color: Color.fromARGB(255, 192, 56, 56),), iconSize: 30,)
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => gameStateProvider.incrementSkip(),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                        Icon(Icons.arrow_downward_rounded, color: Color.fromARGB(255, 192, 56, 56),),
+                        Text('Flip phone down or tap for skipping', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 192, 56, 56)),),
+                        Icon(Icons.arrow_downward_rounded, color: Color.fromARGB(255, 192, 56, 56)),
+                      ],)
+                    ),
+                  ]
                 ),
               ],
             ),

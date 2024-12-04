@@ -19,10 +19,20 @@ class DrawView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final gameProvider = Provider.of<GameStateProvider>(context, listen: false);
+    
     return Consumer<GameStateProvider>(
       builder: (context, gameProvider, child) {
         if (gameProvider.time == 0) {
           _popBack(context);
+        }
+        String wordHint = '';
+        if(gameProvider.words[0].hint != null) {
+          if(gameProvider.words[0].hint!.isEmpty) {
+            wordHint = 'No Hint Available';
+          }
+          else {
+            wordHint = gameProvider.words[0].hint!;
+          }
         }
         return MaterialApp(
           home: Scaffold(
@@ -69,7 +79,7 @@ class DrawView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromARGB(255, 192, 235, 255)
                       ),
-                      child: Text(gameProvider.words[0].hint ?? 'No hint available')
+                      child: Text(wordHint)
                       ),
                   ),
                   Align(
