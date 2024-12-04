@@ -179,79 +179,79 @@ Collection gameMocker() {
 
   final fruitsWords = [
     Word(
-      id: 8,
+      id: 34,
       wordName: "Apple",
       description: "A round fruit that is red, green, or yellow.",
       hint: "Keeps the doctor away.",
     ),
     Word(
-      id: 9,
+      id: 35,
       wordName: "Banana",
       description: "A long, yellow fruit that is peeled before eating.",
       hint: "Monkeys love it.",
     ),
     Word(
-      id: 10,
+      id: 36,
       wordName: "Cherry",
       description: "A small, round fruit that is typically red.",
       hint: "Often found on top of sundaes.",
     ),
     Word(
-      id: 15,
+      id: 37,
       wordName: "Mango",
       description: "A juicy tropical fruit with a large pit.",
       hint: "King of fruits.",
     ),
     Word(
-      id: 16,
+      id: 38,
       wordName: "Strawberry",
       description: "A red, heart-shaped fruit with tiny seeds on the outside.",
       hint: "Sweet and often found in desserts.",
     ),
     Word(
-      id: 34,
+      id: 39,
       wordName: "Pineapple",
       description: "A tropical fruit with a spiky skin and sweet interior.",
       hint: "Goes on pizza?",
     ),
     Word(
-      id: 35,
+      id: 40,
       wordName: "Orange",
       description: "A citrus fruit with a tough skin and juicy interior.",
       hint: "Vitamin C powerhouse.",
     ),
     Word(
-      id: 36,
+      id: 41,
       wordName: "Watermelon",
       description: "A large, green fruit with sweet red flesh inside.",
       hint: "Great for summer picnics.",
     ),
     Word(
-      id: 37,
+      id: 42,
       wordName: "Peach",
       description: "A sweet fruit with fuzzy skin.",
       hint: "Georgia is famous for it.",
     ),
     Word(
-      id: 38,
+      id: 43,
       wordName: "Blueberry",
       description: "A small, blue fruit that's popular in muffins.",
       hint: "Great in pies.",
     ),
     Word(
-      id: 39,
+      id: 44,
       wordName: "Grapes",
       description: "Small fruits that grow in bunches.",
       hint: "Used to make wine.",
     ),
     Word(
-      id: 40,
+      id: 45,
       wordName: "Pear",
       description: "A green or yellow fruit with a bell shape.",
       hint: "Sweet and juicy.",
     ),
     Word(
-      id: 41,
+      id: 46,
       wordName: "Plum",
       description: "A purple or red stone fruit.",
       hint: "Great dried as prunes.",
@@ -260,19 +260,19 @@ Collection gameMocker() {
 
   final holidayWords = [
     Word(
-      id: 11,
+      id: 47,
       wordName: "Halloween",
       description: "Holiday known to dress up as something else",
       hint: "You might be scared of this holiday.",
     ),
     Word(
-      id: 12,
+      id: 48,
       wordName: "New Years",
       description: "Celebration for the start of a new year",
       hint: "Midnight Countdown",
     ),
     Word(
-      id: 13,
+      id: 49,
       wordName: "Christmas",
       description: "Celebration with the implementation of gift-giving and trees",
       hint: "Santa brings gifts.",
@@ -281,19 +281,19 @@ Collection gameMocker() {
 
   final sportsWords = [
     Word(
-      id: 14,
+      id: 50,
       wordName: "Soccer",
       description: "Popular sport against two teams kicking a ball into the goal",
       hint: "It's called something else outside of the U.S.",
     ),
     Word(
-      id: 15,
+      id: 51,
       wordName: "Football",
       description: "Played by catching the ball with your hands as you score by crossing the opponent's field line",
       hint: "It's an oval ball",
     ),
     Word(
-      id: 16,
+      id: 52,
       wordName: "Swimming",
       description: "A sport played to race in the water ",
       hint: "Involves water.",
@@ -302,19 +302,19 @@ Collection gameMocker() {
 
   final hobbyWords = [
     Word(
-      id: 17,
+      id: 53,
       wordName: "Drawing",
       description: "Use of pencils and other tools to create and display an image",
       hint: "What would you do with a blank paper and tools.",
     ),
     Word(
-      id: 18,
+      id: 54,
       wordName: "Playing a musical instrument",
       description: "Use of an instrument to create different, unique sounds",
       hint: "Making melodies, different tones and sounds",
     ),
     Word(
-      id: 19,
+      id: 55,
       wordName: "Knitting",
       description: "Use of yarn to create a variety of clothing items and more",
       hint: "Gives you something warm to wear.",
