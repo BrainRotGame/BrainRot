@@ -7,23 +7,23 @@ import 'package:flutter/material.dart';
 
 class CollectionProvider extends ChangeNotifier {
   // final List<Category> _categories = gameMocker().collection;
-  final CategoryCollection _collection;
+  late final CategoryCollection _collection;
 
   List<Category> get categories => _collection.collection;
 
-  CollectionProvider({required Isar isar}) : _collection = CategoryCollection(isar: isar);
-  // {
-  //   _collection = CategoryCollection(isar: isar);
-  //   if(_collection.collection.isEmpty) {
-  //     gameMocker(isar: isar, gameCollection: _collection);
-  //   }
-  //   // if(isar.categorys.countSync() == 0) {
-  //   //   _collection = gameMocker(isar: isar);
-  //   // }
-  //   // else {
-  //   //   _collection = CategoryCollection(isar: isar);
-  //   // }
-  // }
+  CollectionProvider({required Isar isar}) 
+  {
+    _collection = CategoryCollection(isar: isar);
+    if(_collection.collection.isEmpty) {
+      gameMocker(isar: isar, gameCollection: _collection);
+    }
+    // if(isar.categorys.countSync() == 0) {
+    //   _collection = gameMocker(isar: isar);
+    // }
+    // else {
+    //   _collection = CategoryCollection(isar: isar);
+    // }
+  }
 
   // void addCategory(String categoryName) {
   //   final newCategory = Category(categoryName: categoryName, words: []);

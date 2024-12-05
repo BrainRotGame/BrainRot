@@ -13,6 +13,7 @@ class AllCategoriesView extends StatelessWidget {
   void _showAddCategoryDialog(BuildContext context) {
     final TextEditingController controller = TextEditingController();
     showModalBottomSheet(
+      backgroundColor: const Color.fromARGB(255, 213, 187, 177),
       context: context,
       builder: (_) {
         return Padding(
@@ -32,6 +33,7 @@ class AllCategoriesView extends StatelessWidget {
                 label: 'Save category',
                 hint: 'Saves the entered category name',
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
                   onPressed: () {
                     final categoryName = controller.text.trim();
                     if (categoryName.isNotEmpty) {
@@ -40,7 +42,7 @@ class AllCategoriesView extends StatelessWidget {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Save', style: TextStyle(color: Colors.black,)),
                 ),
               ),
             ],
@@ -56,46 +58,51 @@ class AllCategoriesView extends StatelessWidget {
       builder: (BuildContext context) {
         if(error) {
           return const AlertDialog(
-          title: Text('Cannot play game - Category is empty. '),
+            backgroundColor:Color.fromARGB(255, 213, 187, 177),
+            title: Text('Cannot play game - Category is empty. '),
         );
         }
         else {
           return AlertDialog(
-            title: Text('You selected "${category.categoryName}"'),
-            content: const Text('Pick a timer'),
+            backgroundColor: const Color.fromARGB(255, 213, 187, 177),
+            title: Text('You selected "${category.categoryName}"', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+            content: const Text('Pick a timer', style: TextStyle(fontSize: 20)),
             actions: [
               Semantics(
                 button: true,
                 label: 'Cancel',
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: const Text('Cancel', style: TextStyle(color: Colors.black),),
                 ),
               ),
               Semantics(
                 button: true,
                 label: 'Start a 1-minute game',
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
                   onPressed: () {
                     navigateGame(context: context, category: category, time: 60);
                   },
-                  child: const Text('1 min'),
+                  child: const Text('1 min', style: TextStyle(color: Colors.black)),
                 ),
               ),
               Semantics(
                 button: true,
                 label: 'Start a 2-minute game',
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
                   onPressed: () => navigateGame(context: context, category: category, time: 120),
-                  child: const Text('2 min'),
+                  child: const Text('2 min', style: TextStyle(color: Colors.black)),
                 ),
               ),
               Semantics(
                 button: true,
                 label: 'Start a 5-minute game',
                 child: ElevatedButton(
-                  onPressed: () => navigateGame(context: context, category: category, time: 300),
-                  child: const Text('5 min'),
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
+                  onPressed: () => navigateGame(context: context, category: category, time: 30000), //TODO RESET 5MINS
+                  child: const Text('5 min', style: TextStyle(color: Colors.black)),
                 ),
               ),
             ],
@@ -110,7 +117,10 @@ class AllCategoriesView extends StatelessWidget {
     final categories = Provider.of<CollectionProvider>(context).categories;
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 57, 61, 63),
       appBar: AppBar(
+        toolbarHeight: 65,
+        backgroundColor: const Color.fromARGB(255, 213, 187, 177),
         title: const Text('Brain Rot', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),),
         actions: [
           Semantics(
@@ -153,10 +163,10 @@ class AllCategoriesView extends StatelessWidget {
             message: 'Tap to play game. Press & hold to edit category',
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
+                backgroundColor: const Color.fromARGB(255, 231, 109, 131),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
-                  side: const BorderSide(color: Colors.black),
+                  side: const BorderSide(color: Color.fromARGB(255, 77, 77, 77)),
                 ),
               ),
               onPressed: () {
@@ -215,13 +225,14 @@ class AllCategoriesView extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return const AlertDialog(
-          title: Text('Help Info'),
+          backgroundColor: Color.fromARGB(255, 213, 187, 177),
+          title: Text('Help Info', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),),
           content: Align(
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap the + button to add a new category.'))),
-                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap & hold a category to edit their word bank.'))),
-                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap a category to play a game.'))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap the + button to add a new category.', style: TextStyle(fontSize: 20),))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap & hold a category to edit their word bank.', style: TextStyle(fontSize: 20)))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap a category to play a game.', style: TextStyle(fontSize: 20)))),
               ],
             ),
           )

@@ -31,13 +31,18 @@ class DrawView extends StatelessWidget {
         }
         return MaterialApp(
           home: Scaffold(
+            backgroundColor: const Color.fromARGB(255, 213, 187, 177),
             appBar:
-                AppBar(title: const Text('Drawing Display'), actions: <Widget>[
+              AppBar(
+                title: const Text('Drawing Display'), 
+                backgroundColor: const Color.fromARGB(255, 213, 187, 177),
+                actions: <Widget>[
                   Semantics(label: 'Clear all button',excludeSemantics: true, child: IconButton(tooltip: 'Clear', key: const Key('Clear'), iconSize: 30, onPressed: () => _clear(context), icon: const Icon(Icons.clear))),
                   Semantics(label: 'Undo button',excludeSemantics: true, child: IconButton(tooltip: 'Undo', key: const Key('Undo'), iconSize: 30, onPressed: () => _undo(context), icon: const Icon(Icons.undo))),
                   Semantics(label: 'Redo button',excludeSemantics: true, child: IconButton(tooltip: 'Redo', key: const Key('Redo'), iconSize: 30, onPressed: () => _redo(context), icon: const Icon(Icons.redo))),
             ]),
             drawer: Drawer(
+              backgroundColor: const Color.fromARGB(255, 213, 187, 177),
               child: Palette(context, key: const Key('Palette')),
             ),
             body: Padding(
@@ -49,11 +54,11 @@ class DrawView extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Container(
                       width: 200,
-                      height: 80,
+                      height: 85,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(5),
-                        color: const Color.fromARGB(255, 197, 235, 253),
+                        color: const Color.fromARGB(255, 201, 140, 167),
                       ),
                       child: Column(children: [
                         Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 18),),
@@ -72,7 +77,7 @@ class DrawView extends StatelessWidget {
                       margin: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 192, 235, 255)
+                        color: const Color.fromARGB(255, 173, 218, 197)
                       ),
                       child: SizedBox(width: 650, child: Text(wordHint, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,))
                       ),
@@ -86,11 +91,11 @@ class DrawView extends StatelessWidget {
                         excludeSemantics: true,
                         child: IconButton(
                           iconSize: 30,
-                          style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 192, 235, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
+                          style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255,201, 140, 167)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
                           onPressed: () {
                             gameProvider.toggleHint();
                           }, 
-                          icon: const Icon(Icons.question_mark)),
+                          icon: const Icon(Icons.question_mark, color: Color.fromARGB(255, 57, 61, 63),)),
                       )
                       ),
                   ),
@@ -106,8 +111,8 @@ class DrawView extends StatelessWidget {
                       excludeSemantics: true,
                       child: ElevatedButton(
                         onPressed: () => _popBack(context),
-                        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 192, 235, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
-                        child: const Icon(Icons.arrow_back, size: 30,)))
+                        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 201, 140, 167)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
+                        child: const Icon(Icons.arrow_back, size: 30, color: Color.fromARGB(255, 57, 61, 63),)))
                       // child: IconButton(key: const Key('Back'), iconSize: 30, onPressed: () => _popBack(context), icon: const Icon(Icons.arrow_back)))
                     ),
                 ]

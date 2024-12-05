@@ -107,19 +107,20 @@ class _GameViewState extends State<GameView> {
       // Render UI based on whether the game is finished
       if (!gameStateProvider.finished) {
         return Scaffold(
-          backgroundColor: Colors.lightBlue[100],
+          backgroundColor: const Color.fromARGB(255, 213, 187, 177),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 149, 202, 178),),
                   onPressed: () => gameStateProvider.incrementCorrect(),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Icon(Icons.arrow_upward_rounded, color: Color.fromARGB(255, 52, 112, 54),),
-                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 52, 112, 54))),
-                    Icon(Icons.arrow_upward_rounded, color: Color.fromARGB(255, 52, 112, 54),),
+                    Icon(Icons.arrow_upward_rounded, color: Colors.white,),
+                    Text('Flip phone up or tap for guessing correctly', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,)),
+                    Icon(Icons.arrow_upward_rounded, color: Colors.white,),
                   ],)
                 ),
                 Expanded(
@@ -128,12 +129,12 @@ class _GameViewState extends State<GameView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 200,
-                        height: 80,
+                        width: 210,
+                        height: 85,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 201, 140, 167),
                         ),
                         child: Column(
                           children: [
@@ -144,11 +145,12 @@ class _GameViewState extends State<GameView> {
                         ),
                       ),
                       const Expanded(child: SizedBox()),
-                      SizedBox(width:650, child: Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)),
+                      SizedBox(width:650, child: Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50, color: Color.fromARGB(255, 57, 61, 63)), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)),
                       const Expanded(child: SizedBox()),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 201, 140, 167),),
                         onPressed: () => _navigateToDrawing(context),
-                        child: const Text("Navigate to drawing", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+                        child: const Padding(padding: EdgeInsets.all(7),child: Text("Navigate to drawing", style: TextStyle(fontSize: 20, color: Colors.black))),
                       ),
                     ],
                   ),
@@ -161,18 +163,19 @@ class _GameViewState extends State<GameView> {
                         padding: const EdgeInsets.all(10),
                         child: IconButton(
                         onPressed: () {Navigator.pop(context); }, 
-                        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 255, 255, 255)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
-                        icon: const Icon(Icons.clear, color: Color.fromARGB(255, 192, 56, 56),), iconSize: 30,)
+                        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 231, 109, 131)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
+                        icon: const Icon(Icons.clear, color: Colors.white,), iconSize: 30,)
                       ),
                     ),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
                       onPressed: () => gameStateProvider.incrementSkip(),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                        Icon(Icons.arrow_downward_rounded, color: Color.fromARGB(255, 192, 56, 56),),
-                        Text('Flip phone down or tap for skipping', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 192, 56, 56)),),
-                        Icon(Icons.arrow_downward_rounded, color: Color.fromARGB(255, 192, 56, 56)),
+                        Icon(Icons.arrow_downward_rounded, color: Colors.white,),
+                        Text('Flip phone down or tap for skipping', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+                        Icon(Icons.arrow_downward_rounded, color: Colors.white),
                       ],)
                     ),
                   ]

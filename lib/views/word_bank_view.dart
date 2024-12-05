@@ -17,12 +17,14 @@ class WordBankView extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: category,
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 57, 61, 63),
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 213, 187, 177),
           title: Semantics(
             header: true,
             label: '${category.categoryName} - Word Bank',
             excludeSemantics: false,
-            child: Text('${category.categoryName} - Word Bank'),
+            child: Text('${category.categoryName} - Word Bank', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
           ),
           actions: [
             Semantics(
@@ -104,6 +106,7 @@ class WordBankView extends StatelessWidget {
                           message: 'Tap to edit term. Tap & hold to delete term',
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 201, 140, 167),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 side: const BorderSide(color: Colors.black),
@@ -144,7 +147,7 @@ class WordBankView extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontStyle: FontStyle.italic,
-                                      color: Colors.red,
+                                      color: Color.fromARGB(255,57, 61, 63),
                                       overflow: TextOverflow.ellipsis
                                     ),
                                   ),
@@ -164,20 +167,21 @@ class WordBankView extends StatelessWidget {
     );
   }
   
-    //method will display a Dialog box of a help menu
+  //method will display a Dialog box of a help menu
   //@param: takes in a BuildContext
   _showHelp(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return const AlertDialog(
-          title: Text('Help Info'),
+          backgroundColor: Color.fromARGB(255, 213, 187, 177),
+          title: Text('Help Info', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           content: Align(
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap the + button to add a new Word with a description and hint.'))),
-                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap a word to edit it.'))),
-                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap & hold a word to delete it.'))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap the + button to add a new Word with a description and hint.', style: TextStyle(fontSize: 20)))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap a word to edit it.', style: TextStyle(fontSize: 20),))),
+                Padding(padding: EdgeInsets.all(10), child: Align(alignment: Alignment.centerLeft, child: Text('- Tap & hold a word to delete it.', style: TextStyle(fontSize: 20)))),
                 
               ],
             ),

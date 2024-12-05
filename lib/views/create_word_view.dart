@@ -36,8 +36,10 @@ class _CreateWordViewState extends State<CreateWordView> {
     final isEditing = widget.word != null;
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 213, 187, 177),
       appBar: AppBar(
-        title: Text(isEditing ? 'Edit Word' : 'Create Word'),
+        backgroundColor: const Color.fromARGB(255, 213, 187, 177),
+        title: Text(isEditing ? 'Edit Word' : 'Create Word', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -86,8 +88,9 @@ class _CreateWordViewState extends State<CreateWordView> {
               label: isEditing ? 'Update Word Button' : 'Save Word Button',
               button: true,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 156, 196, 178)),
                 onPressed: () => _saveAndPop(context),
-                child: Text(isEditing ? 'Update Word' : 'Save Word'),
+                child: Text(isEditing ? 'Update Word' : 'Save Word', style: const TextStyle(color: Colors.black),),
               ),
             ),
             if(error)

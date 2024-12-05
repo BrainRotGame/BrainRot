@@ -15,11 +15,11 @@ class Palette extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: [
           const DrawerHeader(
-            child: Text('Tools and Colors'),
+            child: Text('Tools and Colors', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
           ),
           _buildToolButton(
             name: 'Line',
-            icon: Icons.timeline_sharp,
+            icon: Icons.line_axis,
             tool: Tools.line,
             provider: drawingProvider,
           ),
@@ -89,7 +89,7 @@ class Palette extends StatelessWidget {
           child: SizedBox(
             width: 48,
             height: 48,
-            child: Icon(icon, color: provider.toolSelected == tool ? Colors.blue : Colors.grey, size: 48,)),
+            child: Icon(icon, color: provider.toolSelected == tool ? Colors.white : const Color.fromARGB(255, 101, 108, 112) , size: 48,)),
         )
 
 
@@ -117,7 +117,7 @@ class Palette extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black, width: 2),
-              color: provider.colorSelected == color ? color.withOpacity(0.4) : color,
+              color: provider.colorSelected == color ? color.withOpacity(0.1) : color,
               borderRadius: BorderRadius.circular(5),
             ),
           ),
