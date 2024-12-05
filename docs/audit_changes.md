@@ -16,9 +16,24 @@ Peer Audit
 Name: Leo Tian
 Partner’s Name: Raio Chea
 Date/Place of audit: 340 Lecture - Dec 2nd
-Devices and settings used: Simulator with Screen Reader. 
+Devices and settings used: Simulator with Screen Reader.
 
 Strengths
-The overall consistency of the app was on point. Everything was clean and straightforward to navigate, and each element had good colors that made them pop. 
+The overall consistency of the app was on point. Everything was clean and straightforward to navigate, and each element had good colors that made them pop.
 Weaknesses
-Some of the buttons or text relative to the whole screen were a little small. Increasing the size of all the UI elements would go a long way in improving the app experience. 
+Some of the buttons or text relative to the whole screen were a little small. Increasing the size of all the UI elements would go a long way in improving the app experience.
+
+
+Peer Audit
+Name: Nazanin Hassanzadeh
+Partner's name: Wintana Negash
+Date/Place of audit: CSE2 - Dec 5th
+Device and settings used: Windows with Android
+
+Strengths:
+Functionality of the sensor view. The ability to draw and have the hint options
+available. It seemed very easy to use and had a very nice color scheme that
+allowed for better readability.
+Weaknesses:
+Creating an option to create a more wide range of times for the timer for
+certain categories.
