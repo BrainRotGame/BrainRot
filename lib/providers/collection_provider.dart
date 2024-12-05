@@ -5,6 +5,8 @@ import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/category.dart';
 import 'package:flutter/material.dart';
 
+//Object represents a provider for CategoryCollection
+//Handles updating the CategoryCollection and initializing it
 class CollectionProvider extends ChangeNotifier {
   // final List<Category> _categories = gameMocker().collection;
   late final CategoryCollection _collection;
