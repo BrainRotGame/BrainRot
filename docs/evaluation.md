@@ -15,3 +15,5 @@ Averages:
 SUS Score: 81.75
 Learnability: 85
 Usability: 80.9375
+
+Overall the averages we got indicated our app had adequately good usability/learnability all-around. While testing, we observed that not many people immediately understood how to navigate the app, often overlooking that you could long-press to edit categories, and not having the clearest idea of how the game aspect within our game worked. This led us to implementing even more features such as help popups for every page, tooltips for every single button, and aditional navigational buttons.
