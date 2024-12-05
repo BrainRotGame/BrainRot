@@ -28,7 +28,7 @@ class CategoryCollection {
     if (existingIndex == -1) {
       // Add new category
       _collection.add(category);
-      //print('Added category "${category.categoryName}".');
+      //Adds new category into the category collection within Isar
       await _isar.writeTxn(() async {
         await _isar.categorys.put(category);
       });

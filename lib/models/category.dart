@@ -29,9 +29,11 @@ class Category extends ChangeNotifier {
   //@param: takes in Isar to update, and the word that's being upserted into the category
   void upsertWord({required Isar isar, required Word word, required bool notify}) {
     isar.writeTxnSync(() {
-      isar.words.putSync(word); // Save the word synchronously
-      words.add(word);          // Link word to category synchronously
-      isar.categorys.putSync(this); // Save updated category synchronously
+      //Synchronously adds the word into the word collection within Isar
+      isar.words.putSync(word); 
+      words.add(word);          
+      //Updates the category so that the category reflects the change of the word being put in
+      isar.categorys.putSync(this); 
     });
 
     if(notify) {
@@ -44,8 +46,10 @@ class Category extends ChangeNotifier {
   //@param: Takes in a Isar to remove from, and a word that's being removed
   void removeWord({required Isar isar, required Word word}) {
     isar.writeTxnSync(() {
+      //synchronously deletes the word from the word collection within Isar
       isar.words.deleteSync(word.id!);
       words.remove(word);
+      //Updates the category so that the category reflects the change of the word being deleted
       isar.categorys.putSync(this); 
     });
 

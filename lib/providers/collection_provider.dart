@@ -12,6 +12,7 @@ class CollectionProvider extends ChangeNotifier {
   List<Category> get categories => _collection.collection;
 
   CollectionProvider({required Isar isar}) {
+    //If collection is empty, then it'll load mock data into it (so if a user loads the app for the very first time, they're presented with some starter categories as opposed to a blank screen)
     _collection = CategoryCollection(isar: isar);
     if(_collection.collection.isEmpty) {
       gameMocker(isar: isar, gameCollection: _collection);

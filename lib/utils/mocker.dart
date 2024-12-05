@@ -7,6 +7,8 @@ import 'package:brainrot/models/collection.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:isar/isar.dart';
 
+//Method will load mockData into the isar if the isar is empty (so when a user loads into the app for the first time)
+//@param: takes in an isar, and CategoryCollection to add into
 void gameMocker({required Isar isar, required CategoryCollection gameCollection}) {
   
   final animalsWords = [
@@ -264,6 +266,7 @@ void gameMocker({required Isar isar, required CategoryCollection gameCollection}
     ),
   ];
 
+  //Creates categories and upserts words into both the category and isar
   final animalsCategory = Category(categoryName: "Animals");
   for(Word word in animalsWords) {
     animalsCategory.upsertWord(isar: isar, word: word, notify: false);
@@ -280,7 +283,7 @@ void gameMocker({required Isar isar, required CategoryCollection gameCollection}
 
   
 
-
+  //categories are then upserted into the CategoryCollection so there's starter data
   gameCollection.upsertCategory(animalsCategory);
   gameCollection.upsertCategory(fruitsCategory);
   gameCollection.upsertCategory(countriesCategory);

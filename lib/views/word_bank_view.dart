@@ -5,6 +5,8 @@ import 'package:brainrot/models/category.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:brainrot/views/create_word_view.dart';
 
+//Object represents a view for a WordBank
+//WordBank will display the collection of words for a particular category
 class WordBankView extends StatelessWidget {
   final Category category;
   final Isar isar;

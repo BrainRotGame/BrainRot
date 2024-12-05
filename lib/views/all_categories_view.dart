@@ -6,111 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/views/game_views/game_view.dart';
 
+//Object represents a view for all categories
+//View will display all categories, and acts as the main homepage
 class AllCategoriesView extends StatelessWidget {
   const AllCategoriesView({super.key, required this.isar});
   final Isar isar;
-
-  void _showAddCategoryDialog(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
-    showModalBottomSheet(
-      backgroundColor: const Color.fromARGB(255, 213, 187, 177),
-      context: context,
-      builder: (_) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Semantics(
-                label: 'Enter a new category name',
-                child: TextField(
-                  controller: controller,
-                  decoration: const InputDecoration(labelText: 'Enter category name'),
-                ),
-              ),
-              Semantics(
-                button: true,
-                label: 'Save category',
-                hint: 'Saves the entered category name',
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
-                  onPressed: () {
-                    final categoryName = controller.text.trim();
-                    if (categoryName.isNotEmpty) {
-                      Provider.of<CollectionProvider>(context, listen: false)
-                          .addCategory(categoryName);
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: const Text('Save', style: TextStyle(color: Colors.black,)),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _showCategoryPopup(BuildContext context, Category category, bool error) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        if(error) {
-          return const AlertDialog(
-            backgroundColor:Color.fromARGB(255, 213, 187, 177),
-            title: Text('Cannot play game - Category is empty. '),
-        );
-        }
-        else {
-          return AlertDialog(
-            backgroundColor: const Color.fromARGB(255, 213, 187, 177),
-            title: Text('You selected "${category.categoryName}"', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-            content: const Text('Pick a timer', style: TextStyle(fontSize: 20)),
-            actions: [
-              Semantics(
-                button: true,
-                label: 'Cancel',
-                child: TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel', style: TextStyle(color: Colors.black),),
-                ),
-              ),
-              Semantics(
-                button: true,
-                label: 'Start a 1-minute game',
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
-                  onPressed: () {
-                    navigateGame(context: context, category: category, time: 60); 
-                  },
-                  child: const Text('1 min', style: TextStyle(color: Colors.black)),
-                ),
-              ),
-              Semantics(
-                button: true,
-                label: 'Start a 2-minute game',
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
-                  onPressed: () => navigateGame(context: context, category: category, time: 120),
-                  child: const Text('2 min', style: TextStyle(color: Colors.black)),
-                ),
-              ),
-              Semantics(
-                button: true,
-                label: 'Start a 5-minute game',
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
-                  onPressed: () => navigateGame(context: context, category: category, time: 300),
-                  child: const Text('5 min', style: TextStyle(color: Colors.black)),
-                ),
-              ),
-            ],
-          );
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -205,6 +105,115 @@ class AllCategoriesView extends StatelessWidget {
     );
   }
 
+  //Method will display a popup UI for adding a new category
+  //@param: takes in a BuildContext
+  void _showAddCategoryDialog(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
+    showModalBottomSheet(
+      backgroundColor: const Color.fromARGB(255, 213, 187, 177),
+      context: context,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Semantics(
+                label: 'Enter a new category name',
+                child: TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(labelText: 'Enter category name'),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Save category',
+                hint: 'Saves the entered category name',
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
+                  onPressed: () {
+                    final categoryName = controller.text.trim();
+                    if (categoryName.isNotEmpty) {
+                      Provider.of<CollectionProvider>(context, listen: false)
+                          .addCategory(categoryName);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text('Save', style: TextStyle(color: Colors.black,)),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  //Method will display a popup UI for starting a game of a particular category
+  //If the category is empty (has no words within it), the popup will prevent the user from playing
+  //@param: takes in a BuildContext, category that was selected, and error checker
+  void _showCategoryPopup(BuildContext context, Category category, bool error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        if(error) {
+          return const AlertDialog(
+            backgroundColor:Color.fromARGB(255, 213, 187, 177),
+            title: Text('Cannot play game - Category is empty. '),
+        );
+        }
+        else {
+          return AlertDialog(
+            backgroundColor: const Color.fromARGB(255, 213, 187, 177),
+            title: Text('You selected "${category.categoryName}"', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+            content: const Text('Pick a timer', style: TextStyle(fontSize: 20)),
+            actions: [
+              Semantics(
+                button: true,
+                label: 'Cancel',
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Cancel', style: TextStyle(color: Colors.black),),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Start a 1-minute game',
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
+                  onPressed: () {
+                    navigateGame(context: context, category: category, time: 60); 
+                  },
+                  child: const Text('1 min', style: TextStyle(color: Colors.black)),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Start a 2-minute game',
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
+                  onPressed: () => navigateGame(context: context, category: category, time: 120),
+                  child: const Text('2 min', style: TextStyle(color: Colors.black)),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Start a 5-minute game',
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
+                  onPressed: () => navigateGame(context: context, category: category, time: 300),
+                  child: const Text('5 min', style: TextStyle(color: Colors.black)),
+                ),
+              ),
+            ],
+          );
+        }
+      },
+    );
+  }
+
+  //Method will navigate the app to the gameView
+  //@param: takes in a BuildContext, category, and time for how long the game should be played
   void navigateGame({required BuildContext context, required Category category, required int time}) {
     Navigator.of(context).pop();
     Navigator.of(context).push(

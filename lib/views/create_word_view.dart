@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:brainrot/models/word.dart';
 import 'package:brainrot/models/category.dart';
 
+//Object represents a view for creating a new word entry
+//UI View allows users to add/modify a word with a description and hint
 class CreateWordView extends StatefulWidget {
   final Word word; // Existing word to edit (null for a new word)
   final int? index; // Index of the word in the list
