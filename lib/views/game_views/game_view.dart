@@ -67,7 +67,11 @@ class _GameViewState extends State<GameView> {
         // motion of sensor moving up, increment correct
         // the devices have yet to be flagged in order to prevent any repetition
         // occuring
-        if (e.z > 9.5 && !deviceFlipsUp) {
+        if(e.z.abs() <= 2) {
+          deviceFlipsUp = false; // user sets the device to face up
+          deviceFlipsDown = false; 
+        }
+        else if (e.z > 9.5 && !deviceFlipsUp) {
           deviceFlipsUp = true;
           deviceFlipsDown = false;
           gameStateProvider.incrementCorrect();
