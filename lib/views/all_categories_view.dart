@@ -82,7 +82,7 @@ class AllCategoriesView extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
                   onPressed: () {
-                    navigateGame(context: context, category: category, time: 60);
+                    navigateGame(context: context, category: category, time: 5); 
                   },
                   child: const Text('1 min', style: TextStyle(color: Colors.black)),
                 ),

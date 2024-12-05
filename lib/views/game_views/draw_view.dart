@@ -19,12 +19,9 @@ class DrawView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final gameProvider = Provider.of<GameStateProvider>(context, listen: false);
-    
     return Consumer<GameStateProvider>(
       builder: (context, gameProvider, child) {
-        if (gameProvider.time == 0) {
-          _popBack(context);
-        }
+        
         String wordHint = 'No Hint Available';
         if(gameProvider.words[0].hint != null && gameProvider.words[0].hint!.isNotEmpty) {
           wordHint = gameProvider.words[0].hint!;
@@ -97,7 +94,7 @@ class DrawView extends StatelessWidget {
                       label: 'Back button',
                       excludeSemantics: true,
                       child: ElevatedButton(
-                        onPressed: () => _popBack(context),
+                        onPressed: () => Navigator.pop(context),
                         style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 201, 140, 167)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
                         child: const Icon(Icons.arrow_back, size: 30, color: Color.fromARGB(255, 57, 61, 63),)))
                       // child: IconButton(key: const Key('Back'), iconSize: 30, onPressed: () => _popBack(context), icon: const Icon(Icons.arrow_back)))
@@ -139,21 +136,6 @@ class DrawView extends StatelessWidget {
   //@param: takes in a BuildContext
   void _redo(BuildContext context) {
     Provider.of<DrawingProvider>(context, listen: false).redo();
-  }
-
-  //Method will pop the current view (including any popup diagloues) back to the game view
-  //@param: takes in a BuildContext
-  _popBack(BuildContext context) {
-    if (Navigator.of(context).canPop()) {
-      Navigator.of(context).pop(); // Close the dialog if it's open
-    }
-    Navigator.of(context).pop(); // Pop DrawView
-    
-    // if(gameProvider.hint) {
-    //   gameProvider.hint = false;
-    //   Navigator.pop(context);
-    // }
-    // Navigator.pop(context);
   }
 
 

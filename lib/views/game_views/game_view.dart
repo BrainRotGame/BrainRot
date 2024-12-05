@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:brainrot/models/category.dart';
 import 'package:brainrot/providers/drawing_provider.dart';
 import 'package:brainrot/providers/game_state_provider.dart';
+import 'package:brainrot/views/all_categories_view.dart';
 import 'package:brainrot/views/game_views/draw_view.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
@@ -215,6 +216,11 @@ class _GameViewState extends State<GameView> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => GameView(isar: widget.isar, time: widget.time, category: widget.category)), // Restart the game view
+                    (route) => false,
+                  );
                   _restart(notify: true);
                 },
                 child: const FittedBox(child: Text('Restart Game', textAlign: TextAlign.center,)),
@@ -222,9 +228,11 @@ class _GameViewState extends State<GameView> {
               TextButton(
                 onPressed: () {
                   // close the dialog box
-                  Navigator.of(context).pop();
-                  // forcefully exit the app entirely
-                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => AllCategoriesView(isar: widget.isar)), // Restart the game view
+                    (route) => false,
+                  );
                 },
                 child: const Text("Exit"),
               ),
