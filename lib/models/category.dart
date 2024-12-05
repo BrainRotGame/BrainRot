@@ -27,14 +27,17 @@ class Category extends ChangeNotifier {
   //Method will add/update a word within the category
   //If the word already exists within the category, it'll be updated, otherwise the word will be added into the category
   //@param: takes in Isar to update, and the word that's being upserted into the category
-  void upsertWord({required Isar isar, required Word word}) {
+  void upsertWord({required Isar isar, required Word word, required bool notify}) {
     isar.writeTxnSync(() {
       isar.words.putSync(word); // Save the word synchronously
       words.add(word);          // Link word to category synchronously
       isar.categorys.putSync(this); // Save updated category synchronously
     });
 
-    notifyListeners();
+    if(notify) {
+      notifyListeners();
+    }
+    
   }
 
   //Method will remove a word within the category

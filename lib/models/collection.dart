@@ -7,7 +7,9 @@ class CategoryCollection {
   final List<Category> _collection;
   final Isar _isar;
 
-  CategoryCollection({required Isar isar}) : _collection = isar.categorys.where().findAllSync(), _isar = isar;
+  CategoryCollection({required Isar isar}) :
+   _collection = isar.categorys.where().findAllSync(), 
+   _isar = isar;
 
   // Getter method for collection
   List<Category> get collection => List.from(_collection);

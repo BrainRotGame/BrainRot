@@ -38,7 +38,7 @@ class WordBankView extends StatelessWidget {
                     description: '',
                     hint: null,
                   );
-                  category.upsertWord(isar: isar, word: newWord);
+                  category.upsertWord(isar: isar, word: newWord, notify: true);
                     final addedWord = await Navigator.push<Word>(
                       context,
                       MaterialPageRoute(
@@ -54,7 +54,7 @@ class WordBankView extends StatelessWidget {
                     // print(category.loadWords(isar));
                   }
                   else {
-                    category.upsertWord(isar: isar, word: addedWord);
+                    category.upsertWord(isar: isar, word: addedWord, notify: true);
                   }
                 },
                 icon: const Icon(Icons.add, size: 36),
@@ -121,7 +121,7 @@ class WordBankView extends StatelessWidget {
                               );
                           
                               if (updatedWord != null) {
-                                category.upsertWord(isar: isar, word: updatedWord);
+                                category.upsertWord(isar: isar, word: updatedWord, notify: true);
                             // print(category.loadWords(isar));
                               }
                             },

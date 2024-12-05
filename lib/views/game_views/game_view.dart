@@ -244,7 +244,7 @@ class _GameViewState extends State<GameView> {
     // context: passed in to provide access to other widgets
   _navigateToDrawing(BuildContext context) {
     final drawingProvider = Provider.of<DrawingProvider>(context, listen: false);
-    drawingProvider.wipeDrawing(); //TODO only wipe drawing on a new term
+    drawingProvider.wipeDrawing();
     if (context.mounted) {
       Navigator.push(
         context,

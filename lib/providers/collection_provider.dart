@@ -1,3 +1,4 @@
+import 'package:brainrot/utils/mocker.dart';
 import 'package:isar/isar.dart';
 import 'package:brainrot/models/collection.dart';
 // import 'package:brainrot/utils/mocker.dart';
@@ -11,6 +12,18 @@ class CollectionProvider extends ChangeNotifier {
   List<Category> get categories => _collection.collection;
 
   CollectionProvider({required Isar isar}) : _collection = CategoryCollection(isar: isar);
+  // {
+  //   _collection = CategoryCollection(isar: isar);
+  //   if(_collection.collection.isEmpty) {
+  //     gameMocker(isar: isar, gameCollection: _collection);
+  //   }
+  //   // if(isar.categorys.countSync() == 0) {
+  //   //   _collection = gameMocker(isar: isar);
+  //   // }
+  //   // else {
+  //   //   _collection = CategoryCollection(isar: isar);
+  //   // }
+  // }
 
   // void addCategory(String categoryName) {
   //   final newCategory = Category(categoryName: categoryName, words: []);
@@ -18,6 +31,8 @@ class CollectionProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
+  //Method will add a new category to the collection
+  //@param takes in a category to add
   void addCategory(String category) {
     final newCategory = Category(categoryName: category);
     _collection.upsertCategory(newCategory);
