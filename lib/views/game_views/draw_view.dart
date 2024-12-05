@@ -69,19 +69,6 @@ class DrawView extends StatelessWidget {
                         // Text('Correct Guesses: $correct'),
                         // Text('Skipped: $skipped'),],)),
                   ),
-                  if(gameProvider.hint)
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 173, 218, 197)
-                      ),
-                      child: SizedBox(width: 400, child: Text(wordHint, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,))
-                      ),
-                  ),
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
@@ -93,7 +80,7 @@ class DrawView extends StatelessWidget {
                           iconSize: 30,
                           style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255,201, 140, 167)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
                           onPressed: () {
-                            gameProvider.toggleHint();
+                            _showHint(context, wordHint);
                           }, 
                           icon: const Icon(Icons.question_mark, color: Color.fromARGB(255, 57, 61, 63),)),
                       )
@@ -124,6 +111,18 @@ class DrawView extends StatelessWidget {
     );
   }
 
+  _showHint(BuildContext context, String hint) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 213, 187, 177),
+          title: Text(hint, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),),
+        );
+      },
+    );
+  }
+
   //Method will clear the drawing on the canvas
   //@param: takes in a BuildContext
   void _clear(BuildContext context) {
@@ -142,11 +141,19 @@ class DrawView extends StatelessWidget {
     Provider.of<DrawingProvider>(context, listen: false).redo();
   }
 
-  //Method will pop the current view back to the game view
+  //Method will pop the current view (including any popup diagloues) back to the game view
   //@param: takes in a BuildContext
   _popBack(BuildContext context) {
-    Provider.of<GameStateProvider>(context,listen: false).hint = false;
-    Navigator.pop(context);
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop(); // Close the dialog if it's open
+    }
+    Navigator.of(context).pop(); // Pop DrawView
+    
+    // if(gameProvider.hint) {
+    //   gameProvider.hint = false;
+    //   Navigator.pop(context);
+    // }
+    // Navigator.pop(context);
   }
 
 

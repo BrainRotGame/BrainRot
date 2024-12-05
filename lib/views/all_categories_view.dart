@@ -101,7 +101,7 @@ class AllCategoriesView extends StatelessWidget {
                 label: 'Start a 5-minute game',
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 231, 109, 131)),
-                  onPressed: () => navigateGame(context: context, category: category, time: 30000), //TODO RESET 5MINS
+                  onPressed: () => navigateGame(context: context, category: category, time: 300), //TODO RESET 5MINS
                   child: const Text('5 min', style: TextStyle(color: Colors.black)),
                 ),
               ),

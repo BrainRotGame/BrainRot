@@ -70,8 +70,7 @@ class _GameViewState extends State<GameView> {
         if(e.z.abs() <= 2) {
           deviceFlipsUp = false; // user sets the device to face up
           deviceFlipsDown = false; 
-        }
-        else if (e.z > 9.5 && !deviceFlipsUp) {
+        } else if (e.z > 9.5 && !deviceFlipsUp) {
           deviceFlipsUp = true;
           deviceFlipsDown = false;
           gameStateProvider.incrementCorrect();
