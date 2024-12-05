@@ -14,7 +14,6 @@ class GameStateProvider extends ChangeNotifier{
   List<Word> words;
   List<Word> guessedWords;
   bool finished;
-  bool hint;
 
   GameStateProvider()
   :
@@ -23,8 +22,7 @@ class GameStateProvider extends ChangeNotifier{
   skipped = 0,
   words = [],
   guessedWords = [],
-  finished = false,
-  hint = false;
+  finished = false;
 
   // updated the time with a new value of time
   // Parameters:
@@ -90,13 +88,6 @@ class GameStateProvider extends ChangeNotifier{
     if(time == 0) {
       finished = true;
     }
-    notifyListeners();
-  }
-
-  // method created to update the UI and display a hint to the user
-  // if asked
-  void toggleHint() {
-    hint = !hint;
     notifyListeners();
   }
 
