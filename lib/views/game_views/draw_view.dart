@@ -74,6 +74,7 @@ class DrawView extends StatelessWidget {
                         label: 'toggle hint button',
                         excludeSemantics: true,
                         child: IconButton(
+                          tooltip: 'Show hint',
                           iconSize: 30,
                           style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255,201, 140, 167)), foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 36, 36, 36))),
                           onPressed: () {
@@ -114,7 +115,7 @@ class DrawView extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: const Color.fromARGB(255, 213, 187, 177),
-          title: Text(hint, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),),
+          title: Text(hint, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
         );
       },
     );
