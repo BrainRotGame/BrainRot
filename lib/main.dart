@@ -20,7 +20,6 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CollectionProvider(isar: isar)),
-        // ChangeNotifierProvider(create: (_) => WordBankProvider()),
         ChangeNotifierProvider(create: (_) => GameStateProvider()),
         ChangeNotifierProvider(create: (_) => DrawingProvider(width: 800, height: 400)),
       ],

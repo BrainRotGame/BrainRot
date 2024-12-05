@@ -53,15 +53,6 @@ class _GameViewState extends State<GameView> {
     super.dispose();
   }
 
-// @override
-// // ensuring context and widget tree are available
-// // in which they can be accessed
-// void didChangeDependencies() {
-//   super.didChangeDependencies();
-//   // called once we know that the context has been initialized
-//   _sensorView();  // Start listening after context is available
-// }
-
   // Method created in order to determine the detection of the
   // change in orientation the user makes with their device
   void _sensorView() {
@@ -129,8 +120,8 @@ class _GameViewState extends State<GameView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 210,
-                        height: 85,
+                        width: 180,
+                        height: 65,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(5),
@@ -138,19 +129,19 @@ class _GameViewState extends State<GameView> {
                         ),
                         child: Column(
                           children: [
-                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 18),),
-                            Text('Correct Guesses: ${gameStateProvider.correct}',  style: const TextStyle(fontSize: 18)),
-                            Text('Skipped: ${gameStateProvider.skipped}',  style: const TextStyle(fontSize: 18)),
+                            Text('Time Remaining: ${(gameStateProvider.time / 60).floor()}:${(gameStateProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 14),),
+                            Text('Correct Guesses: ${gameStateProvider.correct}',  style: const TextStyle(fontSize: 14)),
+                            Text('Skipped: ${gameStateProvider.skipped}',  style: const TextStyle(fontSize: 14)),
                           ],
                         ),
                       ),
                       const Expanded(child: SizedBox()),
-                      SizedBox(width:650, child: Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50, color: Color.fromARGB(255, 57, 61, 63)), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)),
+                      SizedBox(width:300, child: Text(gameStateProvider.words[0].wordName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color: Color.fromARGB(255, 57, 61, 63)), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)),
                       const Expanded(child: SizedBox()),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 201, 140, 167),),
                         onPressed: () => _navigateToDrawing(context),
-                        child: const Padding(padding: EdgeInsets.all(7),child: Text("Navigate to drawing", style: TextStyle(fontSize: 20, color: Colors.black))),
+                        child: const Padding(padding: EdgeInsets.all(7),child: Text("Navigate to drawing", style: TextStyle(fontSize: 14, color: Colors.black))),
                       ),
                     ],
                   ),

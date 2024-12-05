@@ -53,17 +53,17 @@ class DrawView extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 200,
-                      height: 85,
+                      width: 180,
+                      height: 65,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(5),
                         color: const Color.fromARGB(255, 201, 140, 167),
                       ),
                       child: Column(children: [
-                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 18),),
-                        Text('Correct Guesses: ${gameProvider.correct}',  style: const TextStyle(fontSize: 18)),
-                        Text('Skipped: ${gameProvider.skipped}',  style: const TextStyle(fontSize: 18)),
+                        Text('Time Remaining: ${(gameProvider.time / 60).floor()}:${(gameProvider.time % 60).toString().padLeft(2,'0')}', style: const TextStyle(fontSize: 14),),
+                        Text('Correct Guesses: ${gameProvider.correct}',  style: const TextStyle(fontSize: 14)),
+                        Text('Skipped: ${gameProvider.skipped}',  style: const TextStyle(fontSize: 14)),
                       ],)),
                         // Text('Correct Guesses: ${gameProvider.time}'),
                         // Text('Correct Guesses: $correct'),
@@ -79,7 +79,7 @@ class DrawView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromARGB(255, 173, 218, 197)
                       ),
-                      child: SizedBox(width: 650, child: Text(wordHint, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,))
+                      child: SizedBox(width: 400, child: Text(wordHint, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,))
                       ),
                   ),
                   Align(
@@ -101,7 +101,7 @@ class DrawView extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: const DrawArea(width: 800, height: 400),
+                    child: const DrawArea(width: 400, height: 300),
                   ),
                   
                   Align(

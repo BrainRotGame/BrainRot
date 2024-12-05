@@ -25,10 +25,7 @@ class CategoryCollection {
           category.categoryName.toLowerCase(),
     );
 
-    if (existingIndex != -1) {
-      // notify user the word already exist
-      // print('Category "${category.categoryName}" already exists.');
-    } else {
+    if (existingIndex == -1) {
       // Add new category
       _collection.add(category);
       //print('Added category "${category.categoryName}".');
